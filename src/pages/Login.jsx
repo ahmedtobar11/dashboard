@@ -8,7 +8,6 @@ export default function Login() {
           <div className="hidden md:block md:w-1/2 mx-5 text-center relative">
             <img src="loginAdmin.svg" alt="Login image" className="mb-0" />
           </div>
-
           <div className="card w-full md:w-1/2 bg-s-light shadow-2xl p-6 border-2 border-main shadow-main-light">
             <LoginForm />
           </div>
