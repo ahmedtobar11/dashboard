@@ -15,7 +15,7 @@ const Sidebar = () => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
     { name: "View Graduates", link: "/", icon: Search },
-    { name: "Validate Graduate", link: "/", icon: Fingerprint },
+    { name: "Validate Graduate", link: "/requestValidation", icon: Fingerprint },
     { name: "Logout", link: "/", icon: LogOut, margin: true },
   ];
 
