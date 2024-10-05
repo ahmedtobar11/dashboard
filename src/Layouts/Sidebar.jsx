@@ -5,9 +5,8 @@ import {
   Fingerprint,
   LogOut,
   CircleUser,
-  Ellipsis,
 } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(window.innerWidth >= 768);
@@ -15,7 +14,7 @@ const Sidebar = () => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
     { name: "View Graduates", link: "/", icon: Search },
-    { name: "Validate Graduate", link: "requestValidation", icon: Fingerprint },
+    { name: "Validate Graduate", link: "/registration-requests", icon: Fingerprint },
     { name: "Logout", link: "/", icon: LogOut, margin: true },
   ];
 
@@ -34,13 +33,7 @@ const Sidebar = () => {
 
   return (
     <section>
-      <div className="bg-light-dark h-6 px-2 text-text hidden md:block ">
-        <Ellipsis
-          size={30}
-          className="cursor-pointer"
-          onClick={() => setOpen(!open)}
-        />
-      </div>
+ 
       <section className="flex gap-6">
         <div
           className={`bg-main-light min-h-screen flex flex-col ${
@@ -101,9 +94,6 @@ const Sidebar = () => {
           )}
         </div>
 
-        <div className="flex-grow">
-          <Outlet />
-        </div>
       </section>
     </section>
   );

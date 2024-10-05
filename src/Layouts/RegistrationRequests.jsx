@@ -1,7 +1,7 @@
-import RequestCard from "../Components/RequestValidation/RequestCard";
+import RequestCard from "../Components/registrationRequests/RequestCard";
 import { requestsData } from "../../public/requestsData";
 
-function RequestValidation() {
+function RegistrationRequests() {
   return (
     <div>
       <div className="max-w-3xl mx-auto p-6">
@@ -16,4 +16,4 @@ function RequestValidation() {
   );
 }
 
-export default RequestValidation;
+export default RegistrationRequests;
