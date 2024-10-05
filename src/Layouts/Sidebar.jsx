@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   House,
   Search,
   Fingerprint,
   LogOut,
   CircleUser,
-  Ellipsis,
+ 
 } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(window.innerWidth >= 768);
+const Sidebar = ({open,setOpen}) => {
+  
 
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
@@ -33,14 +33,8 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <section>
-      <div className="bg-light-dark h-6 px-2 text-text hidden md:block ">
-        <Ellipsis
-          size={30}
-          className="cursor-pointer"
-          onClick={() => setOpen(!open)}
-        />
-      </div>
+    
+     
       <section className="flex gap-6">
         <div
           className={`bg-main-light min-h-screen flex flex-col ${
@@ -101,11 +95,9 @@ const Sidebar = () => {
           )}
         </div>
 
-        <div className="flex-grow">
-          <Outlet />
-        </div>
+       
       </section>
-    </section>
+   
   );
 };
 
