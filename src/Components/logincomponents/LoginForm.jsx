@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { loginSchema } from "../../utils/validations/userSchemas";
+import { loginSchema } from "../../utils/validations/adminSchemas";
 import Button from "../ui/Button";
-import authRequests from "../../services/apiRequests/authApiRequests";
+import authApiRequests from "../../services/apiRequests/authApiRequests";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function LoginForm() {
     console.log(data);
     try {
       setIsLoading(true);
-      const response = await authRequests.login(data);
+      const response = await authApiRequests.login(data);
       console.log(response);
     } catch (error) {
       setError(error.response?.data || "An error occurred. Please try again.");
