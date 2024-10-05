@@ -1,31 +1,39 @@
-// LoginForm.jsx
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { schema } from "./validations/loginSchema" 
-import { loginSubmit } from "./LoginService/loginSubmit"; 
+import { loginSchema } from "../../utils/validations/userSchemas";
 import Button from "../ui/Button";
+import authRequests from "../../services/apiRequests/authApiRequests";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [dataError, setError] = useState("");
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit = async (data) => {
-    await loginSubmit(data, setIsLoading, setError);
+    console.log(data);
+    try {
+      setIsLoading(true);
+      const response = await authRequests.login(data);
+      console.log(response);
+    } catch (error) {
+      setError(error.response?.data || "An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}  className="card-body space-y-10">
+    <form onSubmit={handleSubmit(onSubmit)} className="card-body space-y-10">
       <h1 className="text-main text-center text-4xl md:text-5xl font-bold  ">
-        Login  
+        Login
       </h1>
 
       <div className="form-control">
@@ -40,7 +48,9 @@ export default function LoginForm() {
           aria-invalid={!!errors.email}
           aria-describedby="email-error"
           {...register("email")}
-          className={`input input-bordered w-full ${errors.email ? "border-red-500" : "border-gray-300"}`}
+          className={`input input-bordered w-full ${
+            errors.email ? "border-red-500" : "border-gray-300"
+          }`}
         />
         {errors.email && (
           <p id="email-error" className="mt-1 text-sm text-red-600">
@@ -61,7 +71,9 @@ export default function LoginForm() {
           aria-invalid={!!errors.password}
           aria-describedby="password-error"
           {...register("password")}
-          className={`input input-bordered w-full ${errors.password ? "border-red-500" : "border-gray-300"}`}
+          className={`input input-bordered w-full ${
+            errors.password ? "border-red-500" : "border-gray-300"
+          }`}
         />
         {errors.password && (
           <p id="password-error" className="mt-1 text-sm text-red-600">
