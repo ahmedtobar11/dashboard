@@ -1,6 +1,4 @@
-
 import { Fingerprint, LogOut, Search } from "lucide-react";
-import React from "react";
 import { Link } from "react-router-dom";
 
 const menus = [
@@ -20,7 +18,7 @@ const Dashboard = () => {
             className="bg-white p-7 rounded-md text-main text-center shadow-lg flex items-center justify-center text-lg font-bold border border-text"
           >
             <div className="mr-2 mt-1">
-              {React.createElement(menu?.icon, { size: "25" })}
+              {menu?.icon && <menu.icon size={25} />}
             </div>
             {menu?.name}
           </Link>
@@ -77,4 +75,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

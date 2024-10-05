@@ -1,8 +1,12 @@
-
-
-// export default Sidebar;
-import React, { useEffect, useState } from "react";
-import { House, Search, Fingerprint, LogOut, CircleUser, Ellipsis } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  House,
+  Search,
+  Fingerprint,
+  LogOut,
+  CircleUser,
+  Ellipsis,
+} from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Sidebar = () => {
@@ -43,11 +47,10 @@ const Sidebar = () => {
             open ? "w-72" : "w-16"
           } duration-500`}
         >
-        
           {open && (
             <div className="flex flex-col justify-center items-center border-b-2 pt-5">
               <div className="whitespace-pre duration-500 mb-3 text-text">
-                {React.createElement(CircleUser, { size: "75" })}
+                <CircleUser size={75} />
               </div>
               <p className="text-text whitespace-pre duration-500">
                 admin name
@@ -58,7 +61,6 @@ const Sidebar = () => {
             </div>
           )}
 
-          
           <div className="flex-grow">
             <div className="flex flex-col gap-4 relative m-4 text-text">
               {menus?.map((menu, i) => (
@@ -66,12 +68,14 @@ const Sidebar = () => {
                   to={menu?.link}
                   key={i}
                   className={({ isActive }) =>
-                    `${menu?.margin ? "mb-5" : ""} group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-gray-200 ${
+                    `${
+                      menu?.margin ? "mb-5" : ""
+                    } group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-gray-200 ${
                       isActive ? "text-xl text-main font-bold" : ""
                     } `
                   }
                 >
-                  <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                  <div>{menu?.icon && <menu.icon size="20" />}</div>
                   <h2
                     style={{ transitionDelay: `${i + 3}00ms` }}
                     className={`whitespace-pre duration-500 ${
@@ -81,7 +85,9 @@ const Sidebar = () => {
                     {menu?.name}
                   </h2>
                   <h2
-                    className={`${open && "hidden"} absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 w-0 overflow-hidden group-hover:min-w-fit`}
+                    className={`${
+                      open && "hidden"
+                    } absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 w-0 overflow-hidden group-hover:min-w-fit`}
                   >
                     {menu?.name}
                   </h2>
@@ -90,13 +96,11 @@ const Sidebar = () => {
             </div>
           </div>
 
-         
           {open && (
             <img className="mt-auto " src="itilogo.png" alt="iti Image" />
           )}
         </div>
 
-        
         <div className="flex-grow">
           <Outlet />
         </div>
