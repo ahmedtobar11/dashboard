@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
-import {
-  House,
-  Search,
-  Fingerprint,
-  LogOut,
-  CircleUser,
-} from "lucide-react";
+import { House, Search, Fingerprint, LogOut, CircleUser } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(window.innerWidth >= 768);
-
+const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
-    { name: "Validate Graduate", link: "/registration-requests", icon: Fingerprint },
+    {
+      name: "Validate Graduate",
+      link: "/registration-requests",
+      icon: Fingerprint,
+    },
     { name: "Logout", link: "/", icon: LogOut, margin: true },
   ];
 
@@ -33,7 +29,6 @@ const Sidebar = () => {
 
   return (
     <section>
- 
       <section className="flex gap-6">
         <div
           className={`bg-main-light min-h-screen flex flex-col ${
@@ -93,7 +88,6 @@ const Sidebar = () => {
             <img className="mt-auto " src="itilogo.png" alt="iti Image" />
           )}
         </div>
-
       </section>
     </section>
   );
