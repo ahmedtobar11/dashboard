@@ -20,7 +20,7 @@ export const requestsData = [  { id: 1,
     freelancer: "Yes"
   }
   , {
-      id: 1,
+      id: 2,
       name: "gradut full name",
       personalImageUrl:"avatar.jpg",
 
@@ -42,7 +42,7 @@ export const requestsData = [  { id: 1,
       experience: "2",
       freelancer: "Yes"
     }, {
-      id: 1,
+      id: 3,
       name: "gradut full name",
       personalImageUrl:"avatar.jpg",
 
@@ -65,7 +65,7 @@ export const requestsData = [  { id: 1,
       freelancer: "Yes"
     },
     {
-      id: 1,
+      id: 4,
       name: "gradut full name",
       email: "email@email.com",
       personalImageUrl:"avatar.jpg",
@@ -88,7 +88,7 @@ export const requestsData = [  { id: 1,
       freelancer: "Yes"
     }
     , {
-        id: 1,
+        id: 5,
         name: "gradut full name",
         email: "email@email.com",
         personalImageUrl:"avatar.jpg",
@@ -110,7 +110,7 @@ export const requestsData = [  { id: 1,
         experience: "2",
         freelancer: "Yes"
       }, {
-        id: 1,
+        id: 6,
         name: "gradut full name",
         email: "email@email.com",
         personalImageUrl:"avatar.jpg",

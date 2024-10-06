@@ -13,7 +13,7 @@ const Sidebar = () => {
 
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
-    { name: "View Graduates", link: "/", icon: Search },
+    { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
     { name: "Validate Graduate", link: "/registration-requests", icon: Fingerprint },
     { name: "Logout", link: "/", icon: LogOut, margin: true },
   ];

@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import Button from '../ui/Button';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from "react";
+import Button from "../ui/Button";
+import { motion, AnimatePresence } from "framer-motion";
 
 function DetailsModal({ isOpen, onClose, data }) {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
   }, [isOpen]);
 
@@ -37,7 +37,9 @@ function DetailsModal({ isOpen, onClose, data }) {
             transition={{ duration: 0.3 }}
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800">Applicant Details</h2>
+              <h2 className="text-xl font-semibold text-gray-800">
+                Applicant Details
+              </h2>
               <Button
                 text="x"
                 size="lg"
@@ -59,8 +61,14 @@ function DetailsModal({ isOpen, onClose, data }) {
               <DetailRow label="Program" value={data.program} />
               <DetailRow label="Graduation Year" value={data.graduationYear} />
               <DetailRow label="Intake" value={data.intake} />
-              <DetailRow label="Teaching Branches" value={data.teachingBranches?.join(', ')} />
-              <DetailRow label="Preferred Courses" value={data.preferredCourses?.join(', ')} />
+              <DetailRow
+                label="Teaching Branches"
+                value={data.teachingBranches?.join(", ")}
+              />
+              <DetailRow
+                label="Preferred Courses"
+                value={data.preferredCourses?.join(", ")}
+              />
               <DetailRow label="Job Title" value={data.jobTitle} />
               <DetailRow label="Company Name" value={data.companyName} />
               <DetailRow label="Years of Experience" value={data.experience} />

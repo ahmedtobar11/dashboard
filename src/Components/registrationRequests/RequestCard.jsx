@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import DetailsModal from "./DetailsModal";
-import { Mail } from 'lucide-react';
-
+import { Mail } from "lucide-react";
 
 function RequestCard({ request }) {
   const [showModal, setShowModal] = useState(false);
@@ -19,9 +18,11 @@ function RequestCard({ request }) {
           <p className="text-lg font-semibold text-center md:text-left md:text-xl text-gray-800 ">
             {request.name}
           </p>
-          <div className="flex items-center gap-1
-           mt-2 text-sm text-red-600 md:text-xl">
-          <Mail />
+          <div
+            className="flex items-center gap-1
+           mt-2 text-sm text-red-600 md:text-xl"
+          >
+            <Mail />
             <span>{request.email}</span>
           </div>
         </div>
