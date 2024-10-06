@@ -1,10 +1,7 @@
-import axios from "axios";
+import apiInstance from "../interceptor/axiosInstance";
 
 const login = async (adminData) => {
-  const response = await axios.post(
-    "http://localhost:8080/api/v1/login",
-    adminData
-  );
+  const response = await apiInstance.post("auth/login", adminData);
   return response;
 };
 

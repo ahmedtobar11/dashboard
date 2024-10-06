@@ -24,7 +24,7 @@ export default function LoginForm() {
       const response = await authApiRequests.login(data);
       console.log(response);
     } catch (error) {
-      setError(error.response?.data || "An error occurred. Please try again.");
+      setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setIsLoading(false);
     }
