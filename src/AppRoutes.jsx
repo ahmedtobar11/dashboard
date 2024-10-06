@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./Layouts/Dashboard";
 import Home from "./pages/Home";
-import RegistrationRequests from "./Layouts/registrationRequests";
+import RegistrationRequests from "./Layouts/RegistrationRequests";
 import ViewAndExportGraduates from "./Layouts/ViewAndExportGraduates";
 
 const AppRoutes = () => {
