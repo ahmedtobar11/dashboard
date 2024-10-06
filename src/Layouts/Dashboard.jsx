@@ -2,8 +2,12 @@ import { Fingerprint, LogOut, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const menus = [
-  { name: "View Graduates", link: "/view", icon: Search },
-  { name: "Validate Graduate", link: "/", icon: Fingerprint },
+  { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
+  {
+    name: "Validate Graduate",
+    link: "/registration-requests",
+    icon: Fingerprint,
+  },
   { name: "Logout", link: "/", icon: LogOut },
 ];
 
