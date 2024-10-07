@@ -9,22 +9,22 @@ function RegistrationRequests() {
   const [graduates, setGraduates] = useState(requestsData);
   const [isLoading, setIsLoading] = useState();
 
-  const fetchData = () => {
+  const fetchData = async () => {
     try {
       setIsLoading(true);
-      const responseData = graduatesApiRequests.getAllGraduates();
-      // setGraduates(responseData)
-      console.log(responseData);
+      const response = await graduatesApiRequests.getAllGraduates();
+      setGraduates(response);
+      console.log(response);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(graduates);
 
   if (isLoading) {
     return <Loading />;
