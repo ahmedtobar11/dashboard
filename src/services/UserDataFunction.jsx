@@ -1,4 +1,4 @@
-import graduatesApiRequest from "./apiRequests/graduatesApiRequest";
+import graduatesApiRequest from "./apiRequests/graduatesApiRequests";
 
 export const handleTracks = async () => {
   try {
