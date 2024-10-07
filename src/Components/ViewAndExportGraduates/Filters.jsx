@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
-import Selector from "../ui/Selector";
-import { handleTracks } from "../../services/UserDataFunction";
+import SelectComponent from "../ui/SelectComponent";
+import tracksApiRequest from "../../services/apiRequests/tracksApiRequest";
 
-function FilterSelected() {
-  const [tracksData, setTracksData] = useState([]);
+function Filters() {
+  const [tracks, setTracks] = useState([]);
   //const [branchesData, setBranchesData] = useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const tracks = await handleTracks();
-      //const branchs=await handleBranches()
-      setTracksData(tracks);
+      const tracks = await tracksApiRequest.getAllTracks();
+      setTracks(tracks);
+
+      // const branches = await branchesApiRequest.getAllBranches();
+      // setBranches(branches); , etc...
     };
 
     fetchData();
   }, []);
 
-  const track = Array.from(
-    new Set(tracksData?.map((track) => track?.name))
-  ).map((name) => ({
-    value: name,
-    label: name,
-  }));
+  const track = Array.from(new Set(tracks?.map((track) => track?.name))).map(
+    (name) => ({
+      value: name,
+      label: name,
+    })
+  );
 
   const prefrence = [
     { value: "Course", label: "Course" },
@@ -49,22 +51,22 @@ function FilterSelected() {
     <div className="container max-w-screen-xl mx-auto  mt-5 ">
       <div className="container mx-auto flex justify-center mb-2 p-3">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full xl:max-w-[80%] p-2">
-          <Selector
+          <SelectComponent
             options={[{ value: "", label: "No Filter" }, ...track]}
             placeholder="Track"
             onChange={(option) => setSelectedValue(option.value)}
           />
-          <Selector
+          <SelectComponent
             options={[{ value: "", label: "No Filter" }, ...freelancer]}
             placeholder="Freelancer"
             onChange={(option) => setSelectedValue(option.value)}
           />
-          <Selector
+          <SelectComponent
             options={[{ value: "", label: "No Filter" }, ...prefrence]}
             placeholder="Prefrence"
             onChange={(option) => setSelectedValue(option.value)}
           />
-          <Selector
+          <SelectComponent
             options={[{ value: "", label: "No Filter" }, ...branch]}
             placeholder="Branch"
             // value={selectedFilters.branch}
@@ -76,4 +78,4 @@ function FilterSelected() {
   );
 }
 
-export default FilterSelected;
+export default Filters;

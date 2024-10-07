@@ -3,7 +3,7 @@ import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import { requestsData } from "../../public/requestsData";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import FilterSelected from "../Components/ViewAndExportGraduates/FilterSelected";
+import Filters from "../Components/ViewAndExportGraduates/Filters";
 function ViewAndExportGraduates() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ function ViewAndExportGraduates() {
       <div className="w-full my-7">
         <ExportButton data={data} />
       </div>
-      <FilterSelected />
+      <Filters />
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
