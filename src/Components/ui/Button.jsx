@@ -19,9 +19,9 @@ const Button = ({
   };
 
   const variantClasses = {
-    fill: `bg-main text-white hover:bg-main-light 
+    fill: `bg-main text-white  hover:text-main 
            focus:ring-main/20 shadow-sm hover:shadow`,
-    outline: `border-2 border-main text-main hover:bg-main-light
+    outline: `border-2 border-main text-main 
                focus:ring-main/20 `
   };
 
