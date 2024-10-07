@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-function Selector(props) {
+function SelectComponent(props) {
   const { placeholder, options, onChange } = props;
 
   const customStyle = {
@@ -36,4 +36,4 @@ function Selector(props) {
   );
 }
 
-export default Selector;
+export default SelectComponent;
