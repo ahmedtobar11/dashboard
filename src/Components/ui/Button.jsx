@@ -1,5 +1,6 @@
-
+import { Link } from "react-router-dom";
 const Button = ({
+  to,
   text,
   type = "button",
   variant = "fill",
@@ -36,7 +37,13 @@ const Button = ({
     ${disabledClasses}
     ${className}
   `.trim();
-
+  if (to && !disabled) {
+    return (
+      <Link to={to} className={buttonClasses}>
+        {text}
+      </Link>
+    );
+  }
   return (
     <button 
       type={type} 
