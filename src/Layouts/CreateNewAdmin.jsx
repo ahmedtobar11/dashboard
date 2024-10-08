@@ -4,7 +4,7 @@ export default function CreateNewAdmin() {
   const branch = ["Fayoum","Ismailia","Aswan","Fayoum","New Capital","Cairo University","Alexandria","cairo", "porsaid"];
 
   return (
-    <div className="flex flex-col p-28 space-y-10 border border-main border-spacing-3 bg-main-light
+    <div className="m-20 flex flex-col px-12 py-5 rounded-xl space-y-10 border border-main border-spacing-3 bg-main-light
     ">
       <h1 className=" text-center text-main text-2xl ">Create New Admin</h1>
       <div className="flex justify-between
