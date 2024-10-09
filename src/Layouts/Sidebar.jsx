@@ -11,7 +11,13 @@ const Sidebar = ({ open, setOpen }) => {
       link: "/registration-requests",
       icon: Fingerprint,
     },
-    { name: "Logout", link: "/", icon: LogOut, margin: true },
+    {
+      name: "View Admin",
+      link: "/registration-requests",
+      icon: Fingerprint,
+    },
+    { name: "Logout", link: "/", icon: LogOut, margin: true }
+    ,
   ];
 
   // Close sidebar on small screens
