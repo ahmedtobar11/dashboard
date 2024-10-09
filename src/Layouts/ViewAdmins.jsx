@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { adminData } from "../../public/adminData";
-import { Trash2 } from 'lucide-react';
+import { Trash2 } from "lucide-react";
 import NoData from "../Components/ui/NoData";
- 
-function ViewAdmins() {
 
+function ViewAdmins() {
   const [selectedBranch, setSelectedBranch] = useState("All");
 
-  const branches = ["All", ...new Set(adminData.map(admin => admin.branch))];
-  const filteredAdmins = selectedBranch === "All"
-    ? adminData
-    : adminData.filter(admin => admin.branch === selectedBranch);
+  const branches = ["All", ...new Set(adminData.map((admin) => admin.branch))];
+  const filteredAdmins =
+    selectedBranch === "All"
+      ? adminData
+      : adminData.filter((admin) => admin.branch === selectedBranch);
 
   function deleteAdmin(id) {
     console.log("Delete admin with id:", id);
@@ -20,7 +20,9 @@ function ViewAdmins() {
     <>
       {filteredAdmins.length > 0 ? (
         <div className="px-4 py-6">
-          <h1 className="text-2xl text-main font-bold text-center pb-6">Admins</h1>
+          <h1 className="text-2xl text-main font-bold text-center pb-6">
+            Admins
+          </h1>
 
           <div className="flex justify-center mb-6">
             <select
