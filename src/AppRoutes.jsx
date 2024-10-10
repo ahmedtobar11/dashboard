@@ -4,7 +4,8 @@ import Dashboard from "./Layouts/Dashboard";
 import Home from "./pages/Home";
 import RegistrationRequests from "./Layouts/RegistrationRequests";
 import ViewAndExportGraduates from "./Layouts/ViewAndExportGraduates";
-
+import CreateNewAdmin from "./Layouts/CreateNewAdmin";
+import NotFound from "./pages/NotFound"
 const AppRoutes = () => {
   return (
     <Router>
@@ -20,7 +21,15 @@ const AppRoutes = () => {
             path="/view-and-export-graduates"
             element={<ViewAndExportGraduates />}
           />
+          <Route
+            path="/create-new-admin"
+            element={<CreateNewAdmin />}
+          />
         </Route>
+        <Route
+            path="*"
+            element={<NotFound  />}
+          />
       </Routes>
     </Router>
   );

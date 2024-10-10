@@ -4,7 +4,7 @@ import RequestCard from "../Components/registrationRequests/RequestCard";
 import { requestsData } from "../../public/requestsData";
 import Loading from "../Components/ui/Loading";
 import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
-
+import NoData from "../Components/ui/NoData"
 function RegistrationRequests() {
   const [graduates, setGraduates] = useState(requestsData);
   const [isLoading, setIsLoading] = useState();
@@ -30,8 +30,8 @@ function RegistrationRequests() {
     return <Loading />;
   }
   return (
-    <div>
-      {graduates.length >= 0 ? (
+    <>
+      {graduates.length > 0 ? (
         <div className="max-w-3xl mx-auto p-6">
           <h1 className="text-2xl font-medium mb-6 text-center text-main">
             ITi graduate applications
@@ -41,9 +41,15 @@ function RegistrationRequests() {
           ))}
         </div>
       ) : (
-        <p>create no data component</p>
+        
+        <NoData
+        title="EMPTY"
+      description="No Requests to valid"
+      buttonText="home"
+      buttonTo='/'
+        />
       )}
-    </div>
+    </>
   );
 }
 
