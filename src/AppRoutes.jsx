@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import RegistrationRequests from "./Layouts/RegistrationRequests";
 import ViewAndExportGraduates from "./Layouts/ViewAndExportGraduates";
 import CreateNewAdmin from "./Layouts/CreateNewAdmin";
-import NotFound from "./pages/NotFound"
+import ViewAdmins from "./Layouts/ViewAdmins";
+import NotFound from "./pages/NotFound";
 const AppRoutes = () => {
   return (
     <Router>
@@ -21,15 +22,10 @@ const AppRoutes = () => {
             path="/view-and-export-graduates"
             element={<ViewAndExportGraduates />}
           />
-          <Route
-            path="/create-new-admin"
-            element={<CreateNewAdmin />}
-          />
+          <Route path="/create-new-admin" element={<CreateNewAdmin />} />
+          <Route path="/view-admins" element={<ViewAdmins />} />
         </Route>
-        <Route
-            path="*"
-            element={<NotFound  />}
-          />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
