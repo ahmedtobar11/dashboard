@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Nodata from "../../../public/Nodata.svg";
 
-function NoData({ title, description, buttonText, buttonTo }) {
+function NoData({ title = "", description = "", buttonText = "", buttonTo = "" }) {
   return (
     <div
       className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-main-light  px-20"

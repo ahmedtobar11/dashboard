@@ -1,28 +1,47 @@
 import { useState, useEffect } from "react";
 import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
-import { requestsData } from "../../public/requestsData";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import Filters from "../Components/ViewAndExportGraduates/Filters";
+import { requestsData } from '../../public/requestsData';
+// import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
+
 function ViewAndExportGraduates() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);  
   const [expandedRow, setExpandedRow] = useState(null);
 
   useEffect(() => {
-    setData(requestsData);
-  });
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      // const response = await getAllGraduates();
+      // setData(response?.graduates || []);  
+      setData(requestsData);  
+      // console.log(response.graduates);  
+    } catch (error) {
+      setError(error.message || "Something went wrong, Please try again later");
+    } finally {
+      setLoading(false);  
+    }
+  };
 
   if (loading) {
     return <Loading />;
   }
+
+  if (error) {
+    return <div className="error-message">{error}</div>; }
 
   return (
     <div className="p-4">
       <div className="w-full my-7">
         <ExportButton data={data} />
       </div>
-      <Filters />
+      {/* <Filters /> */}
       <div className="overflow-x-auto">
         <table className="table">
           <thead>

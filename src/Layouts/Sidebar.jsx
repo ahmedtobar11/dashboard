@@ -48,7 +48,7 @@ const Sidebar = ({ open, setOpen }) => {
         >
           {open && (
             <div className="flex flex-col justify-center items-center border-b-2 pt-5">
-              <div className="whitespace-pre duration-500 mb-3 text-text">
+              <div className="whitespace-pre duration-500  text-text">
                 <CircleUser size={75} />
               </div>
               <p className="text-text whitespace-pre duration-500">
@@ -68,7 +68,7 @@ const Sidebar = ({ open, setOpen }) => {
                   key={i}
                   className={({ isActive }) =>
                     `${
-                      menu?.margin ? "mb-5" : ""
+                      menu?.margin ? "" : ""
                     } group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-gray-200 ${
                       isActive ? "text-xl text-main font-bold" : ""
                     } `

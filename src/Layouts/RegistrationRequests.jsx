@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import RequestCard from "../Components/registrationRequests/RequestCard";
 import { requestsData } from "../../public/requestsData";
 import Loading from "../Components/ui/Loading";
-import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
+// import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
 import NoData from "../Components/ui/NoData"
 function RegistrationRequests() {
   const [graduates, setGraduates] = useState(requestsData);
@@ -12,7 +12,7 @@ function RegistrationRequests() {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await graduatesApiRequests.getAllGraduates();
+      // const response = await graduatesApiRequests.getAllGraduates();
       setGraduates(response);
       console.log(response);
     } catch (error) {

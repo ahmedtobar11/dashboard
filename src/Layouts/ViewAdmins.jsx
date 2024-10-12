@@ -1,23 +1,82 @@
-import { useState } from "react";
-import { adminData } from "../../public/adminData";
+import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import NoData from "../Components/ui/NoData";
+import { getAdmin, deleteAdminById } from "../services/apiRequests/getAdmins";
+import Loading from "../Components/ui/Loading";
+import DeleteConfirmModal from "../Components/viewAdmins/DeleteConfirmModal"; 
 
 function ViewAdmins() {
   const [selectedBranch, setSelectedBranch] = useState("All");
+  const [data, setAdmin] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [adminToDelete, setAdminToDelete] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
-  const branches = ["All", ...new Set(adminData.map((admin) => admin.branch))];
+  const branches = ["All", ...new Set(data.map((admin) => admin.branch))];
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const filteredAdmins =
     selectedBranch === "All"
-      ? adminData
-      : adminData.filter((admin) => admin.branch === selectedBranch);
+      ? data
+      : data.filter((admin) => admin.branch === selectedBranch);
 
-  function deleteAdmin(id) {
-    console.log("Delete admin with id:", id);
+  const openModal = (admin) => {
+    setAdminToDelete(admin);
+    setIsModalOpen(true)
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); 
+    setAdminToDelete(null);
+  };
+
+  const confirmDelete = async () => {
+    if (adminToDelete) {
+      try {
+        await deleteAdminById(adminToDelete._id);
+        setAdmin((prevAdmins) =>
+          prevAdmins.filter((admin) => admin._id !== adminToDelete._id)
+        );
+        console.log("Admin deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting admin:", error);
+        setError("Failed to delete admin. Please try again later.");
+      } finally {
+        closeModal();
+      }
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getAdmin();
+      setAdmin(response.admins);
+      console.log(response.admins);
+    } catch (error) {
+      console.log(error);
+      setError(error.message || "Something went wrong, Please try again later");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <>
+      <DeleteConfirmModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+      />
+
       {filteredAdmins.length > 0 ? (
         <div className="px-4 py-6">
           <h1 className="text-2xl text-main font-bold text-center pb-6">
@@ -50,15 +109,17 @@ function ViewAdmins() {
             </thead>
             <tbody>
               {filteredAdmins.map((admin) => (
-                <tr key={admin.id} className="hover:bg-gray-50 transition-all">
-                  <td className="px-4 py-2">{admin.name}</td>
+                <tr key={admin._id} className="hover:bg-gray-50 transition-all">
+                  <td className="px-4 py-2">{admin.fullName}</td>
                   <td className="px-4 py-2">{admin.branch}</td>
                   <td className="px-4 py-2">{admin.email}</td>
-                  <td className="px-4 py-2">{admin.password}</td>
+                  <td className="px-4 py-2">
+                    {admin.password ? admin.password : "*******"}
+                  </td>
                   <td className="px-4 py-2">
                     <button
                       className="text-main font-bold flex items-center gap-2 hover:scale-105 transition-transform"
-                      onClick={() => deleteAdmin(admin.id)}
+                      onClick={() => openModal(admin)}
                     >
                       <Trash2 size={22} />
                       Delete Admin
@@ -71,7 +132,7 @@ function ViewAdmins() {
         </div>
       ) : (
         <NoData
-          title="No Admins"
+          title={"No Admins"}
           description="Super admin, you should create your first admin to display in the table."
           buttonText="Create My First Admin"
           buttonTo="/create-new-admin"
