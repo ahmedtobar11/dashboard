@@ -6,7 +6,7 @@ const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
     {
-      name: "View Admin",
+      name: "View Admins",
       link: "/view-admins",
       icon: View,
     },
@@ -17,7 +17,7 @@ const Sidebar = ({ open, setOpen }) => {
     },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
     {
-      name: "Validate Graduate",
+      name: "Registration Requests",
       link: "/registration-requests",
       icon: Fingerprint,
     },

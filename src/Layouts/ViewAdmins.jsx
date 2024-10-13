@@ -1,28 +1,46 @@
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import NoData from "../Components/ui/NoData";
-import { getAdmin, deleteAdminById } from "../services/apiRequests/adminApiRequests";
+import adminApiRequests from "../services/apiRequests/adminApiRequests";
 import Loading from "../Components/ui/Loading";
-import DeleteConfirmModal from "../Components/viewAdmins/DeleteConfirmModal"; 
+import DeleteConfirmModal from "../Components/viewAdmins/DeleteConfirmModal";
+import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
 
 function ViewAdmins() {
-  const [selectedBranch, setSelectedBranch] = useState("All");
-  const [adminsData, setAdmin] = useState([]);
+  // const { branches } = useBranchesAndTracks();
+
+  // const [selectedBranch, setSelectedBranch] = useState("All");
+  const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const branches = ["All", ...new Set(adminsData.map((admin) => admin.branch?.name || "No branch assigned"))];
+  const fetchAdmins = async () => {
+    try {
+      setIsLoading(true);
+      const response = await adminApiRequests.getAllAdmins();
+      setAdmins(response.admins);
+    } catch (error) {
+      setError(
+        error.message || "Error Fetching admins, Please try again later"
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchAdminsData();
+    fetchAdmins();
   }, []);
 
-  const filteredAdmins =
-    selectedBranch === "All"
-      ? adminsData
-      : adminsData.filter((admin) => (admin.branch?.name || "No branch assigned") === selectedBranch);
+  // const filteredAdmins =
+  //   selectedBranch === "All"
+  //     ? admins
+  //     : admins.filter(
+  //         (admin) =>
+  //           (admin.branch?.name || "No branch assigned") === selectedBranch
+  //       );
 
   const openModal = (admin) => {
     setAdminToDelete(admin);
@@ -37,8 +55,8 @@ function ViewAdmins() {
   const confirmDelete = async () => {
     if (adminToDelete) {
       try {
-        await deleteAdminById(adminToDelete._id);
-        setAdmin((prevAdmins) =>
+        await adminApiRequests.deleteAdminById(adminToDelete._id);
+        setAdmins((prevAdmins) =>
           prevAdmins.filter((admin) => admin._id !== adminToDelete._id)
         );
         console.log("Admin deleted successfully!");
@@ -51,19 +69,9 @@ function ViewAdmins() {
     }
   };
 
-  const fetchAdminsData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await getAdmin();
-      setAdmin(response.admins);
-      console.log(response.admins);
-    } catch (error) {
-      console.log(error);
-      setError(error.message || "Something went wrong, Please try again later");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   if (isLoading) {
     return <Loading />;
@@ -77,13 +85,13 @@ function ViewAdmins() {
         onConfirm={confirmDelete}
       />
 
-      {filteredAdmins.length > 0 ? (
+      {admins.length > 0 ? (
         <div className="px-4 py-6">
           <h1 className="text-2xl text-main font-bold text-center pb-6">
             Admins
           </h1>
 
-          <div className="flex justify-center mb-6">
+          {/* <div className="flex justify-center mb-6">
             <select
               value={selectedBranch}
               onChange={(e) => setSelectedBranch(e.target.value)}
@@ -91,11 +99,11 @@ function ViewAdmins() {
             >
               {branches.map((branch, index) => (
                 <option key={index} value={branch}>
-                  {branch}
+                  {branch.name}
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <table className="table-auto w-4/5 mx-auto bg-white shadow-md rounded-lg">
             <thead>
@@ -108,8 +116,11 @@ function ViewAdmins() {
               </tr>
             </thead>
             <tbody>
-              {filteredAdmins.map((admin) => (
-                <tr key={admin._id} className="hover:bg-gray-50 transition-all text-center">
+              {admins.map((admin) => (
+                <tr
+                  key={admin._id}
+                  className="hover:bg-gray-50 transition-all text-center"
+                >
                   <td className="px-4 py-2">{admin.fullName}</td>
                   <td className="px-4 py-2">
                     {admin.branch?.name || "No branch assigned"}
@@ -123,7 +134,6 @@ function ViewAdmins() {
                       onClick={() => openModal(admin)}
                     >
                       <Trash2 size={24} />
-                      Delete Admin
                     </button>
                   </td>
                 </tr>
