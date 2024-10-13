@@ -12,8 +12,18 @@ const Sidebar = ({ open, setOpen }) => {
 
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
-    { name: "View Admin", link: "/view-admins", icon: View },
-    { name: "Create New Admin", link: "/create-new-admin", icon: UserRoundPlus },
+
+    {
+      name: "View Admins",
+      link: "/view-admins",
+      icon: View,
+    },
+    {
+      name: "Create New Admin",
+      link: "/create-new-admin",
+      icon: UserRoundPlus,
+    },
+
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
     { name: "Registration Requests", link: "/registration-requests", icon: Fingerprint },
     { name: "Logout", link: "/login", icon: LogOut, action: handleLogout, margin: true },
