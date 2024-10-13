@@ -26,8 +26,6 @@ export const BranchesAndTracksProvider = ({ children }) => {
       ]);
       setTracks(tracksData.tracks);
       setBranches(branchesData);
-      console.log(tracksData);
-      console.log(branchesData);
     } catch (err) {
       setError("Failed to fetch education data");
       console.error("Error fetching education data:", err);
