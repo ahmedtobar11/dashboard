@@ -4,11 +4,12 @@ import { useState } from "react";
 import { loginSchema } from "../../utils/validations/adminSchemas";
 import Button from "../ui/Button";
 import authApiRequests from "../../services/apiRequests/authApiRequests";
-
+import { useNavigate } from "react-router-dom"; 
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [dataError, setError] = useState("");
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const {
     register,
@@ -23,9 +24,9 @@ export default function LoginForm() {
     try {
       setIsLoading(true);
       const response = await authApiRequests.login(data);
-      console.log(response.data.accessToken);
-      localStorage.setItem("accessToken",response.data.accessToken);
-
+      console.log(response.data);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      navigate("/dashboard", { replace: true }); 
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
