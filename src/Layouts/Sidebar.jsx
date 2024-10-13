@@ -1,28 +1,22 @@
 import { useEffect, useState } from "react";
-import { House, Search, Fingerprint, LogOut, CircleUser,View,UserRoundPlus } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { House, Search, Fingerprint, LogOut, CircleUser, View, UserRoundPlus } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, setOpen }) => {
+  const navigate = useNavigate(); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/login");
+  };
+
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
-    {
-      name: "View Admin",
-      link: "/view-admins",
-      icon: View,
-    },
-    {
-      name: "Create New Admin",
-      link: "/create-new-admin",
-      icon: UserRoundPlus,
-    },
+    { name: "View Admin", link: "/view-admins", icon: View },
+    { name: "Create New Admin", link: "/create-new-admin", icon: UserRoundPlus },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
-    {
-      name: "Registration Requests",
-      link: "/registration-requests",
-      icon: Fingerprint,
-    },
-   
-    { name: "Logout", link: "/", icon: LogOut, margin: true },
+    { name: "Registration Requests", link: "/registration-requests", icon: Fingerprint },
+    { name: "Logout", link: "/login", icon: LogOut, action: handleLogout, margin: true },
   ];
 
   // Close sidebar on small screens
@@ -36,7 +30,7 @@ const Sidebar = ({ open, setOpen }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [setOpen]);
 
   return (
     <section>
@@ -51,9 +45,7 @@ const Sidebar = ({ open, setOpen }) => {
               <div className="whitespace-pre duration-500  text-text">
                 <CircleUser size={75} />
               </div>
-              <p className="text-text whitespace-pre duration-500">
-                admin name
-              </p>
+              <p className="text-text whitespace-pre duration-500">admin name</p>
               <p className="mb-3 text-text whitespace-pre duration-500">
                 admin@gmail.com
               </p>
@@ -62,42 +54,39 @@ const Sidebar = ({ open, setOpen }) => {
 
           <div className="flex-grow">
             <div className="flex flex-col gap-4 relative m-4 text-text">
-              {menus?.map((menu, i) => (
+              {menus.map((menu, i) => (
                 <NavLink
-                  to={menu?.link}
+                  to={menu.link}
                   key={i}
+                  onClick={menu.action ? menu.action : null}
                   className={({ isActive }) =>
-                    `${
-                      menu?.margin ? "" : ""
-                    } group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-gray-200 ${
+                    `group flex items-center text-sm gap-3.5 font-medium p-2 rounded-md hover:bg-gray-200 ${
                       isActive ? "text-xl text-main font-bold" : ""
-                    } `
+                    }`
                   }
                 >
-                  <div>{menu?.icon && <menu.icon size="20" />}</div>
+                  <div>{menu.icon && <menu.icon size="20" />}</div>
                   <h2
                     style={{ transitionDelay: `${i + 3}00ms` }}
                     className={`whitespace-pre duration-500 ${
                       !open && "opacity-0 translate-x-28 overflow-hidden"
                     }`}
                   >
-                    {menu?.name}
+                    {menu.name}
                   </h2>
                   <h2
                     className={`${
                       open && "hidden"
                     } absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 w-0 overflow-hidden group-hover:min-w-fit`}
                   >
-                    {menu?.name}
+                    {menu.name}
                   </h2>
                 </NavLink>
               ))}
             </div>
           </div>
 
-          {open && (
-            <img className="mt-auto " src="itilogo.png" alt="iti Image" />
-          )}
+          {open && <img className="mt-auto " src="itilogo.png" alt="iti Image" />}
         </div>
       </section>
     </section>

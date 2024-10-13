@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import { graduatesData } from "../../public/requestsData";
-// import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
+import graduatesApiRequests  from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
   const [data, setData] = useState([]);
@@ -19,10 +18,8 @@ function ViewAndExportGraduates() {
   const fetchGrads = async () => {
     try {
       setLoading(true);
-      // const response = await getAllGraduates();
-      // setData(response?.graduates || []);
-      setData(graduatesData);
-      // console.log(response.graduates);
+      const response = await getAllGraduates();
+      setData(response?.graduates || []);
     } catch (error) {
       console.log(error)
       setError(error.message || "Something went wrong, Please try again later");
