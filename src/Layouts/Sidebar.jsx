@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
-import { House, Search, Fingerprint, LogOut, CircleUser, View, UserRoundPlus } from "lucide-react";
+import { useEffect } from "react";
+import {
+  House,
+  Search,
+  Fingerprint,
+  LogOut,
+  CircleUser,
+  View,
+  UserRoundPlus,
+} from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ open, setOpen }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -23,8 +31,18 @@ const Sidebar = ({ open, setOpen }) => {
       icon: UserRoundPlus,
     },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
-    { name: "Registration Requests", link: "/registration-requests", icon: Fingerprint },
-    { name: "Logout", link: "/login", icon: LogOut, action: handleLogout, margin: true },
+    {
+      name: "Registration Requests",
+      link: "/registration-requests",
+      icon: Fingerprint,
+    },
+    {
+      name: "Logout",
+      link: "/login",
+      icon: LogOut,
+      action: handleLogout,
+      margin: true,
+    },
   ];
 
   // Close sidebar on small screens
@@ -38,7 +56,7 @@ const Sidebar = ({ open, setOpen }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [setOpen]);
+  }, []);
 
   return (
     <section>
@@ -53,7 +71,9 @@ const Sidebar = ({ open, setOpen }) => {
               <div className="whitespace-pre duration-500  text-text">
                 <CircleUser size={75} />
               </div>
-              <p className="text-text whitespace-pre duration-500">admin name</p>
+              <p className="text-text whitespace-pre duration-500">
+                admin name
+              </p>
               <p className="mb-3 text-text whitespace-pre duration-500">
                 admin@gmail.com
               </p>
@@ -94,7 +114,9 @@ const Sidebar = ({ open, setOpen }) => {
             </div>
           </div>
 
-          {open && <img className="mt-auto " src="itilogo.png" alt="iti Image" />}
+          {open && (
+            <img className="mt-auto " src="itilogo.png" alt="iti Image" />
+          )}
         </div>
       </section>
     </section>

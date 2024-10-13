@@ -26,7 +26,7 @@ const AppRoutes = () => {
         />
         <Route
           path="/"
-          element={<PrivateRoute element={<Home />} isRequiredToLogIn={true} />}
+          element={<PrivateRoute element={<Home />} isRequiredToLogIn={false} />}
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
