@@ -1,44 +1,44 @@
 import Button from "../ui/Button";
 
-export default function TableRow({ row, onExpandRow, isExpanded }) {
+export default function TableRow({ grad, onExpandRow, isExpanded }) {
   return (
     <>
       <tr>
         <td>
-          <div className="flex items-center gap-3 ">
+          <div className="flex items-center gap-3">
             <div className="avatar">
               <div className="mask mask-squircle h-12 w-12">
                 <img
-                  src={row.personalImageUrl || "avatar.jpg"}
-                  alt={`Avatar of ${row.fullName}`}
+                  src={grad.personalImageUrl || "avatar.jpg"}
+                  alt={`Avatar of ${grad.fullName}`}
                 />
               </div>
             </div>
             <div>
-              <div className="font-bold">{row.fullName}</div>
-              <div className="text-sm opacity-50">{row.email}</div>
+              <div className="font-bold">{grad.fullName}</div>
+              <div className="text-sm opacity-50">{grad.email}</div>
             </div>
           </div>
         </td>
         <td className="text-left">
-          {row.trackName}
+          {grad.trackName}
           <br />
-          <span className="badge badge-ghost badge-sm text-nowrap text-center ">
-            {row.branch}
+          <span className="badge badge-ghost badge-sm text-nowrap text-center">
+            {grad.branch}
           </span>
         </td>
         <td>
-          {row.university}
+          {grad.university}
           <br />
           <span className="badge badge-ghost badge-sm text-nowrap">
-            {row.faculty}
+            {grad.faculty}
           </span>
         </td>
         <th>
           <Button
             variant={"outline"}
             size="sm"
-            onClick={() => onExpandRow(row._id)}
+            onClick={() => onExpandRow(grad._id)}
             text="more details"
           />
         </th>
@@ -57,28 +57,30 @@ export default function TableRow({ row, onExpandRow, isExpanded }) {
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Personal Info</h3>
-                    <p>Mobile: {row.mobile}</p>
-                    <p>Birth City: {row.cityOfBirthplace}</p>
-                    <p>National ID: {row.nationalId || "N/A"}</p>
+                    <p>Mobile: {grad.mobile}</p>
+                    <p>Birth City: {grad.cityOfBirth}</p>
+                    <p>National ID: {grad.nationalId || "N/A"}</p>
                   </div>
                 </div>
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Education</h3>
-                    <p>Program: {row.program}</p>
-                    <p>Intake: {row.intake}</p>
-                    <p>Graduation: {row.graduationYearFromIti}</p>
+                    <p>Program: {grad.program}</p>
+                    <p>Intake: {grad.intake}</p>
+                    <p>Graduation: {grad.itiGraduationYear}</p>
                   </div>
                 </div>
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Professional</h3>
-                    <p>Job Title: {row.fullJobTitle || "N/A"}</p>
-                    <p>Company: {row.companyName || "N/A"}</p>
-                    <p>Experience: {row.yearsOfExperience || 0} years</p>
+                    <p>Job Title: {grad.fullJobTitle || "N/A"}</p>
+                    <p>Company: {grad.companyName || "N/A"}</p>
+                    <p>Experience: {grad.yearsOfExperience || 0} years</p>
                     <div className="mt-2">
                       <span className="badge badge-primary">
-                        {row.workedAsFreelancerBefore ? "Freelancer" : "Full-time"}
+                        {grad.workedAsFreelancerBefore
+                          ? "Freelancer"
+                          : "Full-time"}
                       </span>
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 import { Fingerprint, LogOut, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
@@ -12,6 +13,8 @@ const menus = [
 ];
 
 const Dashboard = () => {
+  const { branches, tracks } = useBranchesAndTracks();
+
   return (
     <div className="container max-w-screen-lg mx-auto px-4 mt-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -63,14 +66,14 @@ const Dashboard = () => {
 
       <div className="border border-text p-5 my-5">
         <h3 className="text-main text-xl font-bold text-center mb-3">
-          Static Numbers About ITI
+          Numbers About ITI
         </h3>
         <div className="flex flex-col sm:flex-row justify-between px-8 py-4">
           <p className="font-bold mb-2 sm:mb-0">
-            Number of branches: <span className="ml-5">32</span>
+            Number of branches: <span className="ml-5">{branches.length}</span>
           </p>
           <p className="font-bold">
-            Number of tracks: <span className="ml-5">32</span>
+            Number of tracks: <span className="ml-5">{tracks.length}</span>
           </p>
         </div>
       </div>
