@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createAdmin } from '/src/services/apiRequests/createAdmins.js';
+import { createAdmin } from '../services/apiRequests/adminApiRequests';
 import { useNavigate } from "react-router-dom";
 
 export default function CreateNewAdmin() {
@@ -56,7 +56,7 @@ export default function CreateNewAdmin() {
     try {
       const response = await createAdmin(formData);
       setResponseMessage(response.success);
-         setErrorMessage("");
+      setErrorMessage("");
       navigate("/view-admins");
 
     } catch (error) {
@@ -93,6 +93,7 @@ export default function CreateNewAdmin() {
             value={formData.fullName}
             onChange={handleInputChange}
             onBlur={handleBlur}
+            autoComplete="name"
           />
           {validationErrors.fullName && <p className="text-red-500">{validationErrors.fullName}</p>}
         </label>
@@ -105,6 +106,7 @@ export default function CreateNewAdmin() {
             value={formData.branch}
             onChange={handleInputChange}
             onBlur={handleBlur}
+            autoComplete="organization"
           >
             <option value="" disabled>
               Select an admin branch
@@ -129,6 +131,7 @@ export default function CreateNewAdmin() {
               value={formData.email}
               onChange={handleInputChange}
               onBlur={handleBlur}
+              autoComplete="email"
             />
             {validationErrors.email && <p className="text-red-500">{validationErrors.email}</p>}
           </label>
@@ -143,6 +146,7 @@ export default function CreateNewAdmin() {
               value={formData.password}
               onChange={handleInputChange}
               onBlur={handleBlur}
+              autoComplete="new-password"
             />
             {validationErrors.password && <p className="text-red-500">{validationErrors.password}</p>}
           </label>

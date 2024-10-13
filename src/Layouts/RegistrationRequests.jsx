@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 import RequestCard from "../Components/registrationRequests/RequestCard";
-import { requestsData } from "../../public/requestsData";
+import { graduatesData } from "../../public/requestsData";
 import Loading from "../Components/ui/Loading";
 // import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
 import NoData from "../Components/ui/NoData"
 function RegistrationRequests() {
-  const [graduates, setGraduates] = useState(requestsData);
+  const [graduates, setGraduates] = useState(graduatesData);
   const [isLoading, setIsLoading] = useState();
 
   const fetchData = async () => {

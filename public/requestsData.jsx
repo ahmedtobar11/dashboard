@@ -1,4 +1,4 @@
-export const requestsData = [  { id: 1,
+export const graduatesData = [  { id: 1,
     name: "mostaha yasser",
     personalImageUrl:"avatar.jpg",
     email: "email@email.com",

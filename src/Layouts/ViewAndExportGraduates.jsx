@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import { requestsData } from '../../public/requestsData';
+import { graduatesData } from '../../public/requestsData';
 // import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
@@ -12,15 +12,15 @@ function ViewAndExportGraduates() {
   const [expandedRow, setExpandedRow] = useState(null);
 
   useEffect(() => {
-    fetchData();
+     fetchGrads();
   }, []);
 
-  const fetchData = async () => {
+  const  fetchGrads = async () => {
     try {
       setLoading(true);
       // const response = await getAllGraduates();
       // setData(response?.graduates || []);  
-      setData(requestsData);  
+      setData(graduatesData);  
       // console.log(response.graduates);  
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");

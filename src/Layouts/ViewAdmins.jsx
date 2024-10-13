@@ -1,36 +1,36 @@
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import NoData from "../Components/ui/NoData";
-import { getAdmin, deleteAdminById } from "../services/apiRequests/getAdmins";
+import { getAdmin, deleteAdminById } from "../services/apiRequests/adminApiRequests";
 import Loading from "../Components/ui/Loading";
 import DeleteConfirmModal from "../Components/viewAdmins/DeleteConfirmModal"; 
 
 function ViewAdmins() {
   const [selectedBranch, setSelectedBranch] = useState("All");
-  const [data, setAdmin] = useState([]);
+  const [adminsData, setAdmin] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [adminToDelete, setAdminToDelete] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const branches = ["All", ...new Set(data.map((admin) => admin.branch))];
+  const branches = ["All", ...new Set(adminsData.map((admin) => admin.branch?.name || "No branch assigned"))];
 
   useEffect(() => {
-    fetchData();
+    fetchAdminsData();
   }, []);
 
   const filteredAdmins =
     selectedBranch === "All"
-      ? data
-      : data.filter((admin) => admin.branch === selectedBranch);
+      ? adminsData
+      : adminsData.filter((admin) => (admin.branch?.name || "No branch assigned") === selectedBranch);
 
   const openModal = (admin) => {
     setAdminToDelete(admin);
-    setIsModalOpen(true)
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
     setAdminToDelete(null);
   };
 
@@ -51,7 +51,7 @@ function ViewAdmins() {
     }
   };
 
-  const fetchData = async () => {
+  const fetchAdminsData = async () => {
     try {
       setIsLoading(true);
       const response = await getAdmin();
@@ -99,7 +99,7 @@ function ViewAdmins() {
 
           <table className="table-auto w-4/5 mx-auto bg-white shadow-md rounded-lg">
             <thead>
-              <tr className="bg-gray-100 text-left">
+              <tr className="bg-gray-100 text-center">
                 <th className="px-4 py-2">Admin Name</th>
                 <th className="px-4 py-2">Admin Branch</th>
                 <th className="px-4 py-2">Admin Email</th>
@@ -109,19 +109,20 @@ function ViewAdmins() {
             </thead>
             <tbody>
               {filteredAdmins.map((admin) => (
-                <tr key={admin._id} className="hover:bg-gray-50 transition-all">
+                <tr key={admin._id} className="hover:bg-gray-50 transition-all text-center">
                   <td className="px-4 py-2">{admin.fullName}</td>
-                  <td className="px-4 py-2">{admin.branch}</td>
-                  <td className="px-4 py-2">{admin.email}</td>
                   <td className="px-4 py-2">
-                    {admin.password ? admin.password : "*******"}
+                    {admin.branch?.name || "No branch assigned"}
                   </td>
+                  <td className="px-4 py-2">{admin.email}</td>
+                  <td className="px-4 py-2">{"*******"}</td>
+
                   <td className="px-4 py-2">
                     <button
                       className="text-main font-bold flex items-center gap-2 hover:scale-105 transition-transform"
                       onClick={() => openModal(admin)}
                     >
-                      <Trash2 size={22} />
+                      <Trash2 size={24} />
                       Delete Admin
                     </button>
                   </td>
