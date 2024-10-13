@@ -1,11 +1,14 @@
 import AppRoutes from "./AppRoutes";
+import { AdminProvider } from "./contexts/AdminContext";
 import { BranchesAndTracksProvider } from "./contexts/BranchesAndTracksContext";
 
 function App() {
   return (
-    <BranchesAndTracksProvider>
-      <AppRoutes />
-    </BranchesAndTracksProvider>
+    <AdminProvider>
+      <BranchesAndTracksProvider>
+        <AppRoutes />
+      </BranchesAndTracksProvider>
+    </AdminProvider>
   );
 }
 
