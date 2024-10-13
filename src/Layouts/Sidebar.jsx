@@ -17,7 +17,7 @@ const Sidebar = ({ open, setOpen }) => {
     },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
     {
-      name: "Validate Graduate",
+      name: "Registration Requests",
       link: "/registration-requests",
       icon: Fingerprint,
     },
