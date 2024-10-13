@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./Layouts/Dashboard";
 import Home from "./pages/Home";
@@ -7,23 +12,21 @@ import ViewAndExportGraduates from "./Layouts/ViewAndExportGraduates";
 import CreateNewAdmin from "./Layouts/CreateNewAdmin";
 import ViewAdmins from "./Layouts/ViewAdmins";
 import NotFound from "./pages/NotFound";
-import PrivateRoute from "./Components/privateRoute/PrivateRoute"; 
+import PrivateRoute from "./Components/privateRoute/PrivateRoute";
 
 const AppRoutes = () => {
-  const isAdminLoggedIn = !!localStorage.getItem("accessToken");
-
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route 
-          path="/" 
+        <Route
+          path="/login"
           element={
-            <PrivateRoute 
-              element={<Home />} 
-              isAdminLoggedIn={isAdminLoggedIn} 
-            />
+            <PrivateRoute element={<Login />} isRequiredToLogIn={false} />
           }
+        />
+        <Route
+          path="/"
+          element={<PrivateRoute element={<Home />} isRequiredToLogIn={true} />}
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
