@@ -24,9 +24,10 @@ export const BranchesAndTracksProvider = ({ children }) => {
         tracksApiRequest.getAllTracks(),
         branchApiRequest.getAllBranches(),
       ]);
-      console.log(tracksData);
-      setTracks(tracksData);
+      setTracks(tracksData.tracks);
       setBranches(branchesData);
+      console.log(tracksData);
+      console.log(branchesData);
     } catch (err) {
       setError("Failed to fetch education data");
       console.error("Error fetching education data:", err);

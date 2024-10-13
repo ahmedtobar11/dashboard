@@ -6,7 +6,7 @@ const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: House },
     {
-      name: "View Admin",
+      name: "View Admins",
       link: "/view-admins",
       icon: View,
     },
