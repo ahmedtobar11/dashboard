@@ -2,30 +2,30 @@ import { useState, useEffect } from "react";
 import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import { graduatesData } from '../../public/requestsData';
+import { graduatesData } from "../../public/requestsData";
 // import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);  
+  const [error, setError] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
 
   useEffect(() => {
-     fetchGrads();
+    fetchGrads();
   }, []);
 
-  const  fetchGrads = async () => {
+  const fetchGrads = async () => {
     try {
       setLoading(true);
       // const response = await getAllGraduates();
-      // setData(response?.graduates || []);  
-      setData(graduatesData);  
-      // console.log(response.graduates);  
+      // setData(response?.graduates || []);
+      setData(graduatesData);
+      // console.log(response.graduates);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
-      setLoading(false);  
+      setLoading(false);
     }
   };
 
@@ -34,7 +34,8 @@ function ViewAndExportGraduates() {
   }
 
   if (error) {
-    return <div className="error-message">{error}</div>; }
+    return <div className="error-message">{error}</div>;
+  }
 
   return (
     <div className="p-4">
