@@ -2,32 +2,30 @@ import { useState, useEffect } from "react";
 import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
-import { graduatesData } from "../../public/requestsData";
-// import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
+import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
-  const [data, setData] = useState([]);
+  const [grads, setGrads] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
 
-  useEffect(() => {
-    fetchGrads();
-  }, []);
-
   const fetchGrads = async () => {
     try {
       setLoading(true);
-      // const response = await getAllGraduates();
-      // setData(response?.graduates || []);
-      setData(graduatesData);
-      // console.log(response.graduates);
+      const response =
+        await graduatesApiRequests.getAllGraduates();
+      setGrads(response?.graduates);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchGrads();
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -40,7 +38,7 @@ function ViewAndExportGraduates() {
   return (
     <div className="p-4">
       <div className="w-full my-7">
-        <ExportButton data={data} />
+        <ExportButton grads={grads} />
       </div>
       {/* <Filters /> */}
       <div className="overflow-x-auto">
@@ -54,12 +52,12 @@ function ViewAndExportGraduates() {
             </tr>
           </thead>
           <tbody>
-            {data.map((row) => (
+            {grads.map((grad) => (
               <TableRow
-                key={row.id}
-                row={row}
+                key={grad._id}
+                grad={grad}
                 onExpandRow={setExpandedRow}
-                isExpanded={expandedRow === row.id}
+                isExpanded={expandedRow === grad._id}
               />
             ))}
           </tbody>
