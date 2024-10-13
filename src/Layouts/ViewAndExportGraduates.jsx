@@ -3,26 +3,28 @@ import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
 import { graduatesData } from '../../public/requestsData';
-// import { getAllGraduates } from "../services/apiRequests/graduatesApiRequests";
+import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);  
   const [expandedRow, setExpandedRow] = useState(null);
+  const { getAllGraduates } = graduatesApiRequests;
 
   useEffect(() => {
      fetchGrads();
   }, []);
 
   const  fetchGrads = async () => {
+
     try {
       setLoading(true);
-      // const response = await getAllGraduates();
-      // setData(response?.graduates || []);  
-      setData(graduatesData);  
-      // console.log(response.graduates);  
+      const response = await getAllGraduates();
+      setData(response?.graduates || []);  
+      console.log(response);  
     } catch (error) {
+      console.log(error)
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setLoading(false);  
@@ -58,7 +60,7 @@ function ViewAndExportGraduates() {
                 key={row.id}
                 row={row}
                 onExpandRow={setExpandedRow}
-                isExpanded={expandedRow === row.id}
+                isExpanded={expandedRow === row._id}
               />
             ))}
           </tbody>
