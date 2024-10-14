@@ -50,29 +50,43 @@ function DetailsModal({ isOpen, onClose, data }) {
             </div>
 
             <div className="space-y-2">
-              <DetailRow label="Full Name" value={data.name} />
+              <DetailRow label="Full Name" value={data.fullName} />
               <DetailRow label="Mobile" value={data.mobile} />
               <DetailRow label="Email" value={data.email} />
-              <DetailRow label="City of Birthplace" value={data.birthCity} />
+              <DetailRow label="Linkedin" value={data.linkedin} />
+              <DetailRow label="City of Birth" value={data.cityOfBirth} />
               <DetailRow label="Faculty" value={data.faculty} />
               <DetailRow label="University" value={data.university} />
-              <DetailRow label="Track Name" value={data.track} />
+              <DetailRow label="Track Name" value={data.trackName} />
               <DetailRow label="Branch" value={data.branch} />
               <DetailRow label="Program" value={data.program} />
-              <DetailRow label="Graduation Year" value={data.graduationYear} />
+              <DetailRow
+                label="Graduation Year"
+                value={data.itiGraduationYear}
+              />
               <DetailRow label="Intake" value={data.intake} />
               <DetailRow
                 label="Teaching Branches"
-                value={data.teachingBranches?.join(", ")}
+                value={data.preferredTeachingBranches?.join(", ")}
               />
               <DetailRow
                 label="Preferred Courses"
-                value={data.preferredCourses?.join(", ")}
+                value={data.preferredCoursesToTeach?.split(",").join(", ")}
               />
-              <DetailRow label="Job Title" value={data.jobTitle} />
+              <DetailRow label="Job Title" value={data.fullJobTitle} />
               <DetailRow label="Company Name" value={data.companyName} />
-              <DetailRow label="Years of Experience" value={data.experience} />
-              <DetailRow label="Worked as Freelancer" value={data.freelancer} />
+              <DetailRow
+                label="Years of Experience"
+                value={data.yearsOfExperience}
+              />
+              <DetailRow
+                label="Worked as Freelancer"
+                value={data.hasFreelanceExperience ? "Yes" : "NO"}
+              />
+              <DetailRow
+                label="Freelancing Income"
+                value={data.freelancingIncome}
+              />
             </div>
           </motion.div>
         </motion.div>
