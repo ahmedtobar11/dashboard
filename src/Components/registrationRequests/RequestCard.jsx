@@ -3,7 +3,12 @@ import Button from "../ui/Button";
 import DetailsModal from "./DetailsModal";
 import { Mail } from "lucide-react";
 
-function RequestCard({ request }) {
+function RequestCard({
+  registrationRequest,
+  handleReject,
+  disableBtns,
+  handleAccept,
+}) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -12,18 +17,18 @@ function RequestCard({ request }) {
         <div className="flex flex-col items-center ">
           <div className="avatar ">
             <div className="w-24 rounded-full">
-              <img src={request.personalImageUrl} />
+              <img src={registrationRequest.personalPhoto} />
             </div>
           </div>
           <p className="text-lg font-semibold text-center md:text-left md:text-xl text-gray-800 ">
-            {request.name}
+            {registrationRequest.name}
           </p>
           <div
             className="flex items-center gap-1
            mt-2 text-sm text-red-600 md:text-xl"
           >
             <Mail />
-            <span>{request.email}</span>
+            <span>{registrationRequest.email}</span>
           </div>
         </div>
 
@@ -31,20 +36,21 @@ function RequestCard({ request }) {
           <div className="flex gap-4 md:gap-10 ">
             <p className="break-words">
               <span className="font-medium">Graduation Branch:</span>{" "}
-              {request.branch}
+              {registrationRequest.branch}
             </p>
             <p className="break-words">
-              <span className="font-medium">Track:</span> {request.track}
+              <span className="font-medium">Track:</span>{" "}
+              {registrationRequest.trackName}
             </p>
           </div>
           <div className="flex gap-4 md:gap-12">
             <p className="break-words">
               <span className="font-medium">Graduation Year:</span>{" "}
-              {request.graduationYear}
+              {registrationRequest.itiGraduationYear}
             </p>
             <p className="break-words">
-              <span className="font-medium">National ID:</span>{" "}
-              {request.nationalId}
+              <span className="font-medium">City of birth:</span>{" "}
+              {registrationRequest.cityOfBirth}
             </p>
           </div>
         </div>
@@ -63,11 +69,19 @@ function RequestCard({ request }) {
             text="Reject"
             variant="outline"
             size="sm"
+            disabled={disableBtns}
+            onClick={() => {
+              handleReject(registrationRequest);
+            }}
             className="!text-red-600 !border-red-600 hover:!bg-red-100"
           />
           <Button
             text="Accept"
             size="sm"
+            disabled={disableBtns}
+            onClick={() => {
+              handleAccept(registrationRequest);
+            }}
             className="hover:bg-main hover:text-white transition-colors"
           />
         </div>
@@ -76,7 +90,7 @@ function RequestCard({ request }) {
       <DetailsModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        data={request}
+        data={registrationRequest}
       />
     </div>
   );
