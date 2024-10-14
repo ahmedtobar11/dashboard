@@ -9,7 +9,7 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
             <div className="avatar">
               <div className="mask mask-squircle h-12 w-12">
                 <img
-                  src={grad.personalImageUrl || "avatar.jpg"}
+                  src={grad.personalPhoto || "avatar.jpg"}
                   alt={`Avatar of ${grad.fullName}`}
                 />
               </div>
@@ -57,25 +57,45 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Personal Info</h3>
-                    <p>Mobile: {grad.mobile}</p>
-                    <p>Birth City: {grad.cityOfBirth}</p>
-                    <p>National ID: {grad.nationalId || "N/A"}</p>
+                    <p>
+                      <strong>Mobile:</strong> {grad.mobile}
+                    </p>
+                    <p>
+                      <strong>Birth City:</strong>
+                      {grad.cityOfBirth}
+                    </p>
+                    <p>
+                      <strong>National ID:</strong> {grad.nationalId || "N/A"}
+                    </p>
                   </div>
                 </div>
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Education</h3>
-                    <p>Program: {grad.program}</p>
-                    <p>Intake: {grad.intake}</p>
-                    <p>Graduation: {grad.itiGraduationYear}</p>
+                    <p>
+                      <strong>Program:</strong> {grad.program}
+                    </p>
+                    <p>
+                      <strong>Intake:</strong> {grad.intake}
+                    </p>
+                    <p>
+                      <strong>Graduation:</strong> {grad.itiGraduationYear}
+                    </p>
                   </div>
                 </div>
                 <div className="card bg-base-100 shadow-sm">
                   <div className="card-body">
                     <h3 className="card-title text-sm">Professional</h3>
-                    <p>Job Title: {grad.fullJobTitle || "N/A"}</p>
-                    <p>Company: {grad.companyName || "N/A"}</p>
-                    <p>Experience: {grad.yearsOfExperience || 0} years</p>
+                    <p>
+                      <strong>Job Title:</strong> {grad.fullJobTitle || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Company:</strong> {grad.companyName || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Experience:</strong> {grad.yearsOfExperience || 0}{" "}
+                      years
+                    </p>
                     <div className="mt-2">
                       <span className="badge badge-primary">
                         {grad.workedAsFreelancerBefore
