@@ -40,7 +40,7 @@ function RegistrationRequests() {
         })
       );
     } catch (error) {
-      console.error(error);
+      setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setDisableBtns(false);
     }
@@ -59,7 +59,7 @@ function RegistrationRequests() {
         })
       );
     } catch (error) {
-      console.error(error);
+      setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setDisableBtns(false);
     }

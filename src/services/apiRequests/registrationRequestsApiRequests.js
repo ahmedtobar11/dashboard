@@ -1,4 +1,3 @@
-import { param } from "framer-motion/client";
 import apiInstance from "../interceptor/axiosInstance";
 
 const getAllRegistrationRequests = async () => {
