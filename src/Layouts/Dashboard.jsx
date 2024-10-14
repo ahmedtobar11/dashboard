@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   return (
     <div className="container max-w-screen-lg mx-auto px-4 mt-5">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3b place-content-center gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 place-content-center gap-6">
         {menus.map((menu) => (
           <Link
             to={menu?.link}
