@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [dataError, setError] = useState("");
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const {
     register,
@@ -26,7 +26,7 @@ export default function LoginForm() {
       const response = await authApiRequests.login(data);
       console.log(response.data);
       localStorage.setItem("accessToken", response.data.accessToken);
-      navigate("/dashboard", { replace: true }); 
+      navigate("/", { replace: true }); 
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
