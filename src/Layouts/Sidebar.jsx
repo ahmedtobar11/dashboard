@@ -19,7 +19,7 @@ const Sidebar = ({ open, setOpen }) => {
   };
 
   const menus = [
-    { name: "Dashboard", link: "/dashboard", icon: House },
+    { name: "Dashboard", link: "/", icon: House },
     {
       name: "View Admins",
       link: "/view-admins",
