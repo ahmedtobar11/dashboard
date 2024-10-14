@@ -60,9 +60,8 @@ const Sidebar = ({ open, setOpen }) => {
 
   return (
     <section>
-      <section className="flex gap-6">
-        <div
-          className={`bg-main-light min-h-screen flex flex-col ${
+        <div 
+          className={`pt-2 bg-main-light min-h-screen flex flex-col ${
             open ? "w-72" : "w-16"
           } duration-500`}
         >
@@ -118,7 +117,6 @@ const Sidebar = ({ open, setOpen }) => {
             <img className="mt-auto " src="itilogo.png" alt="iti Image" />
           )}
         </div>
-      </section>
     </section>
   );
 };
