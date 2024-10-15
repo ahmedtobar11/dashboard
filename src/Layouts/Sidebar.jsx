@@ -9,12 +9,16 @@ import {
   UserRoundPlus,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import authServices from "../services/authServices";
+import { useAdminContext } from "../contexts/AdminContext";
 
 const Sidebar = ({ open, setOpen }) => {
+  const { setAdmin } = useAdminContext();
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    authServices.logout(setAdmin);
     navigate("/login");
   };
 
