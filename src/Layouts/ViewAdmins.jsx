@@ -86,8 +86,8 @@ function ViewAdmins() {
       />
 
       {admins.length > 0 ? (
-        <div className="px-4 py-6">
-          <h1 className="text-2xl text-main font-bold text-center pb-6">
+        <div className="px-2 py-6 max-w-full overflow-x-auto">
+          <h1 className="text-xl sm:text-2xl md:text-3xl text-main font-bold text-center pb-4 sm:pb-6">
             Admins
           </h1>
 
@@ -105,42 +105,41 @@ function ViewAdmins() {
             </select>
           </div> */}
 
-          <table className="table-auto w-4/5 mx-auto bg-white shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-gray-100 text-center">
-                <th className="px-4 py-2">Admin Name</th>
-                <th className="px-4 py-2">Admin Branch</th>
-                <th className="px-4 py-2">Admin Email</th>
-                <th className="px-4 py-2">Admin Password</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {admins.map((admin) => (
-                <tr
-                  key={admin._id}
-                  className="hover:bg-gray-50 transition-all text-center"
-                >
-                  <td className="px-4 py-2">{admin.fullName}</td>
-                  <td className="px-4 py-2">
-                    {admin.branch?.name || "No branch assigned"}
-                  </td>
-                  <td className="px-4 py-2">{admin.email}</td>
-                  <td className="px-4 py-2">{"*******"}</td>
-
-                  <td className="px-4 py-2">
-                    <button
-                      className="text-main font-bold flex items-center gap-2 hover:scale-105 transition-transform"
-                      onClick={() => openModal(admin)}
-                    >
-                      <Trash2 size={24} />
-                    </button>
-                  </td>
+<div className="w-full overflow-x-auto">
+            <table className="table-auto w-full  bg-main-w shadow-md rounded-lg  sm:text-base">
+              <thead>
+                <tr className="bg-gray-100 text-center  text-sm md:text-lg lg:text-2xl">
+                  <th className="px-1 py-2 sm:px-4">Name</th>
+                  <th className="px-1 py-2 sm:px-4">Branch</th>
+                  <th className="px-1 py-2 sm:px-4">Email</th>
+                  <th className="px-1 py-2 sm:px-4">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {admins.map((admin) => (
+                  <tr
+                    key={admin._id}
+                    className="hover:bg-gray-50 transition-all text-center text-xs sm:text-sm md:text-lg lg:text-xl"
+                  >
+                    <td className="px-1 py-2 sm:px-4  ">{admin.fullName}</td>
+                    <td className="px-1 py-2 sm:px-4 ">
+                      {admin.branch?.name || "No branch"}
+                    </td>
+                    <td className="px-1 py-2 sm:px-4 break-all  ">{admin.email}</td>
+                    <td className="px-1 py-2 sm:px-4">
+                      <button
+                        className="text-main text-xs lg:text-lg font-bold flex items-center justify-center gap-1 hover:scale-105 transition-transform mx-auto"
+                        onClick={() => openModal(admin)}
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+                  </div>
       ) : (
         <NoData
           title={"No Admins"}

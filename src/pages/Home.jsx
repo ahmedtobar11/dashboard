@@ -4,11 +4,11 @@ import { Outlet } from "react-router-dom";
 import { Ellipsis, Phone } from "lucide-react";
 
 function Home() {
-  const [open, setOpen] = useState(window.innerWidth >= 768);
+  const [open, setOpen] = useState(window.innerWidth >= 1025);
 
   return (
     <section>
-      <div className="sticky top-0   bg-light-dark h-6 px-2 text-text hidden md:flex justify-between z-10 ">
+      <div className="sticky top-0   bg-light-dark h-6 px-2 text-text hidden lg:flex justify-between z-10 ">
         <Ellipsis
           size={30}
           className="cursor-pointer"
@@ -23,7 +23,7 @@ function Home() {
       </div>
       <div className="flex">
         <aside
-          className={`  sticky  top-0 md:top-6  h-screen transition-all duration-300 'w-fit'`}
+          className={`  sticky  top-0 lg:top-6  h-screen transition-all duration-300 'w-fit'`}
         >
           <Sidebar open={open} setOpen={setOpen} />
         </aside>
