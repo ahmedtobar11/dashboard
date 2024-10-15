@@ -48,7 +48,7 @@ const Sidebar = ({ open, setOpen }) => {
   // Close sidebar on small screens
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1025) {
         setOpen(false);
       }
     };
