@@ -1,4 +1,5 @@
 import Button from "../ui/Button";
+import { Linkedin } from 'lucide-react';
 
 export default function TableRow({ grad, onExpandRow, isExpanded }) {
   return (
@@ -47,7 +48,7 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
         </th>
       </tr>
       {isExpanded && (
-        <tr className="bg-base-200 relative">
+        <tr className="bg-base-200 relative ">
           <td colSpan="5" className="p-2 sm:p-4 md:p-6">
             <button
               className="absolute top-1 right-1 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-main hover:bg-white text-white hover:text-main font-extrabold text-xs sm:text-sm"
@@ -55,7 +56,7 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
             >
               X
             </button>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-6">
               <div className="card bg-base-100 shadow-sm">
                 <div className="card-body p-3 sm:p-4">
                   <h3 className="card-title text-sm sm:text-base">
@@ -67,14 +68,11 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                   <p className="text-xs sm:text-sm">
                     <strong>Birth City:</strong> {grad.cityOfBirth}
                   </p>
-                  <p className="text-xs sm:text-sm">
-                    <strong>National ID:</strong> {grad.nationalId || "N/A"}
-                  </p>
                 </div>
               </div>
               <div className="card bg-base-100 shadow-sm">
                 <div className="card-body p-3 sm:p-4">
-                  <h3 className="card-title text-sm sm:text-base">Education</h3>
+                  <h3 className="card-title text-sm sm:text-base"> ITI </h3>
                   <p className="text-xs sm:text-sm">
                     <strong>Program:</strong> {grad.program}
                   </p>
@@ -92,14 +90,18 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                     Professional
                   </h3>
                   <p className="text-xs sm:text-sm">
-                    <strong>Job Title:</strong> {grad.fullJobTitle || "N/A"}
+                    <strong>Job Title:</strong>
+                    {grad.fullJobTitle || "NO JOB YET"}
                   </p>
                   <p className="text-xs sm:text-sm">
-                    <strong>Company:</strong> {grad.companyName || "N/A"}
+                    <strong>Company:</strong> {grad.companyName || "NO JOB YET"}
                   </p>
                   <p className="text-xs sm:text-sm">
-                    <strong>Experience:</strong> {grad.yearsOfExperience || 0}{" "}
+                    <strong>Experience:</strong> {grad.yearsOfExperience || 0}
                     years
+                  </p>
+                  <p className="text-xs sm:text-sm ">
+                  <strong><a target="_blank" href={grad.linkedin} className="text-blue-500 cursor-pointer"> show Linkedin </a></strong> 
                   </p>
                   <div className="mt-2">
                     <span className="badge  text-white   bg-main font-extrabold text-xs">
@@ -113,12 +115,18 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
               <div className="md:hidden card bg-base-100 shadow-sm">
                 <div className="card-body p-3 sm:p-4">
                   <h3 className="card-title text-sm sm:text-base">
-                    ITI Education Info
+                    Education Info
                   </h3>
-                  <div>{grad.university}</div>
-                  <span className="badge badge-ghost badge-sm text-nowrap mt-1">
+                  <div>
+                    
+                    <strong>University:</strong>
+                    {grad.university}
+                  </div>
+                  <div>
+                    
+                    <strong>Faculty:</strong>
                     {grad.faculty}
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
