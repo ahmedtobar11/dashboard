@@ -15,11 +15,11 @@ function Home() {
           onClick={() => setOpen(!open)}
         />
       </div>
-      <div className="flex  ">
-      <div className={`pt-1 sticky top-6 h-screen transition-all duration-300 ${open ? 'w-64' : 'w-0'}`}>
+      <div className="flex">
+      <aside className={`  sticky  top-0 md:top-6  h-screen transition-all duration-300 ${open ? 'w-64' : 'w-fit'}`}>
       <Sidebar open={open} setOpen={setOpen} />
-        </div>
-        <div className="flex-grow">
+        </aside>
+        <div className="flex-grow px-10">
           <Outlet />
         </div>
       </div>
