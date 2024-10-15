@@ -94,15 +94,21 @@ const Sidebar = ({ open, setOpen }) => {
                 <h2
                   style={{ transitionDelay: `${i + 3}00ms` }}
                   className={`whitespace-pre duration-500 ${
-                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                    open
+                      ? "opacity-1 translate-x-0"
+                      : "opacity-0 translate-x-28 overflow-hidden"
                   }`}
                 >
                   {menu.name}
                 </h2>
                 <h2
-                  className={`${
-                    open && "hidden"
-                  } absolute left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 w-0 overflow-hidden group-hover:min-w-fit`}
+                  className={`
+          ${open ? "hidden" : "absolute"} 
+          left-48 bg-white font-semibold whitespace-pre rounded-md drop-shadow-lg 
+          px-0 py-0 group-hover:px-2 group-hover:py-1 group-hover:left-14 
+          group-hover:duration-300 w-0 overflow-hidden group-hover:w-auto
+          z-0 transition-all ease-in-out duration-300
+        `}
                 >
                   {menu.name}
                 </h2>
