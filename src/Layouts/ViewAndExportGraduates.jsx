@@ -6,13 +6,12 @@ import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
 
 function ViewAndExportGraduates() {
   const [grads, setGrads] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
 
   const fetchGrads = async () => {
     try {
-      setLoading(true);
       const response =
         await graduatesApiRequests.getAllGraduates();
       setGrads(response?.graduates);

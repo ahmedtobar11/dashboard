@@ -7,13 +7,12 @@ import registrationRequestsApiRequests from "../services/apiRequests/registratio
 
 function RegistrationRequests() {
   const [registrationRequests, setRegistrationRequests] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [disableBtns, setDisableBtns] = useState(false);
   const [error, setError] = useState("");
 
   const fetchData = async () => {
     try {
-      setIsLoading(true);
       const response =
         await registrationRequestsApiRequests.getAllRegistrationRequests();
       setRegistrationRequests(response.requests);
