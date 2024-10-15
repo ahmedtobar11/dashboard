@@ -1,8 +1,9 @@
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  useLocation,
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./Layouts/Dashboard";
@@ -14,9 +15,20 @@ import ViewAdmins from "./Layouts/ViewAdmins";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Components/privateRoute/PrivateRoute";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const AppRoutes = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/login"
@@ -26,7 +38,9 @@ const AppRoutes = () => {
         />
         <Route
           path="/"
-          element={<PrivateRoute element={<Home />} isRequiredToLogIn={false} />}
+          element={
+            <PrivateRoute element={<Home />} isRequiredToLogIn={false} />
+          }
         >
           <Route index element={<Dashboard />} />
           <Route

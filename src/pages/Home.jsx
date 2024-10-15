@@ -16,10 +16,10 @@ function Home() {
         />
       </div>
       <div className="flex">
-      <aside className={`  sticky  top-0 md:top-6  h-screen transition-all duration-300 ${open ? 'w-64' : 'w-fit'}`}>
+      <aside className={`  sticky  top-0 md:top-6  h-screen transition-all duration-300 'w-fit'`}>
       <Sidebar open={open} setOpen={setOpen} />
         </aside>
-        <div className="flex-grow px-10">
+        <div className="flex-grow px-16 ">
           <Outlet />
         </div>
       </div>
