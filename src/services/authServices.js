@@ -6,7 +6,7 @@ const login = async (data, setAdmin) => {
   localStorage.setItem("accessToken", response.data.accessToken);
   localStorage.setItem("admin", JSON.stringify(response.data.admin));
 
-  setAdmin(response.admin);
+  setAdmin(response.data.admin);
 };
 
 const logout = async (setAdmin) => {

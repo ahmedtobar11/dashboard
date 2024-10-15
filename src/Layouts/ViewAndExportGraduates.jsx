@@ -3,8 +3,11 @@ import TableRow from "../Components/ViewAndExportGraduates/TableRow";
 import Loading from "../Components/ui/Loading";
 import ExportButton from "../Components/ViewAndExportGraduates/ExportButton";
 import graduatesApiRequests from "../services/apiRequests/graduatesApiRequests";
+import { useAdminContext } from "../contexts/AdminContext";
 
 function ViewAndExportGraduates() {
+  const { admin } = useAdminContext();
+
   const [grads, setGrads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,8 +15,12 @@ function ViewAndExportGraduates() {
 
   const fetchGrads = async () => {
     try {
-      const response =
-        await graduatesApiRequests.getAllGraduates();
+      let response;
+      if (admin?.role === "super admin") {
+        response = await graduatesApiRequests.getAllGraduates();
+      } else if (admin?.role === "admin") {
+        response = await graduatesApiRequests.getGraduatesByBranch();
+      }
       setGrads(response?.graduates);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
@@ -24,7 +31,7 @@ function ViewAndExportGraduates() {
 
   useEffect(() => {
     fetchGrads();
-  }, []);
+  }, [admin]);
 
   if (loading) {
     return <Loading />;
@@ -51,7 +58,7 @@ function ViewAndExportGraduates() {
             </tr>
           </thead>
           <tbody>
-            {grads.map((grad) => (
+            {grads?.map((grad) => (
               <TableRow
                 key={grad._id}
                 grad={grad}

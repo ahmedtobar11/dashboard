@@ -4,8 +4,11 @@ import RequestCard from "../Components/registrationRequests/RequestCard";
 import Loading from "../Components/ui/Loading";
 import NoData from "../Components/ui/NoData";
 import registrationRequestsApiRequests from "../services/apiRequests/registrationRequestsApiRequests";
+import { useAdminContext } from "../contexts/AdminContext";
 
 function RegistrationRequests() {
+  const { admin } = useAdminContext();
+
   const [registrationRequests, setRegistrationRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [disableBtns, setDisableBtns] = useState(false);
@@ -13,9 +16,17 @@ function RegistrationRequests() {
 
   const fetchData = async () => {
     try {
-      const response =
-        await registrationRequestsApiRequests.getAllRegistrationRequests();
+      let response;
+      console.log(admin)
+      if (admin?.role === "super admin") {
+        response =
+          await registrationRequestsApiRequests.getAllRegistrationRequests();
+      } else if (admin?.role === "admin") {
+        response =
+          await registrationRequestsApiRequests.getRegistrationRequestsByBranch();
+      }
       setRegistrationRequests(response.requests);
+      console.log(registrationRequests)
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
