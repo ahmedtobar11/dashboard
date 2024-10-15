@@ -11,14 +11,13 @@ function ViewAdmins() {
 
   // const [selectedBranch, setSelectedBranch] = useState("All");
   const [admins, setAdmins] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchAdmins = async () => {
     try {
-      setIsLoading(true);
       const response = await adminApiRequests.getAllAdmins();
       setAdmins(response.admins);
     } catch (error) {
