@@ -4,10 +4,10 @@ import Nodata from "../../../public/Nodata.svg";
 function NoData({ title = "", description = "", buttonText = "", buttonTo = "" }) {
   return (
     <div
-      className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-main-light  px-20"
+      className="flex flex-col lg:flex-row items-center justify-center w-full min-h-screen bg-main-light  px-20"
     >
       <div className="text-center lg:text-left lg:w-1/2 lg:pr-12 space-y-20">
-        <h1 className="text-8xl font-extrabold text-transparent bg-clip-text bg-main ">
+        <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-main ">
           {title}
         </h1>
         <p className="mt-4 text-2xl lg:text-4xl font-bold text-gray-800 dark:text-text-dark">

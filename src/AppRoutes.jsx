@@ -33,25 +33,40 @@ const AppRoutes = () => {
         <Route
           path="/login"
           element={
-            <PrivateRoute element={<Login />} isRequiredToLogIn={false} />
+            <PrivateRoute element={Login} isRequiredToLogIn={false} />
           }
         />
+
         <Route
           path="/"
-          element={<PrivateRoute element={<Home />} isRequiredToLogIn={true} />}
+          element={<PrivateRoute element={Home} isRequiredToLogIn={true} />}
         >
           <Route index element={<Dashboard />} />
+          <Route path="registration-requests" element={<RegistrationRequests />} />
+          <Route path="view-and-export-graduates" element={<ViewAndExportGraduates />} />
+
           <Route
-            path="registration-requests"
-            element={<RegistrationRequests />}
+            path="create-new-admin"
+            element={
+              <PrivateRoute
+                element={CreateNewAdmin}
+                isRequiredToLogIn={true}
+                allFor="super admin"
+              />
+            }
           />
           <Route
-            path="view-and-export-graduates"
-            element={<ViewAndExportGraduates />}
+            path="view-admins"
+            element={
+              <PrivateRoute
+                element={ViewAdmins}
+                isRequiredToLogIn={true}
+                allFor="super admin"
+              />
+            }
           />
-          <Route path="create-new-admin" element={<CreateNewAdmin />} />
-          <Route path="view-admins" element={<ViewAdmins />} />
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
