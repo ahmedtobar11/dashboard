@@ -15,12 +15,14 @@ function ViewAndExportGraduates() {
 
   const fetchGrads = async () => {
     try {
+
       let response;
       if (admin?.role === "super admin") {
         response = await graduatesApiRequests.getAllGraduates();
       } else if (admin?.role === "admin") {
         response = await graduatesApiRequests.getGraduatesByBranch();
       }
+
       setGrads(response?.graduates);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
@@ -42,19 +44,18 @@ function ViewAndExportGraduates() {
   }
 
   return (
-    <div className="p-4">
+    <div className="container py-4 lg:px-8 -z-20">
       <div className="w-full my-7">
         <ExportButton grads={grads} />
       </div>
-      {/* <Filters /> */}
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
+      <div className="shadow-md sm:rounded-lg">
+        <table className="w-full text-sm md:text-lg  text-center">
+          <thead className="text-xs md:text-lg lg:text-xl text-gray-700 uppercase bg-gray-100">
             <tr>
-              <th>Student Info</th>
-              <th>Track & Branch</th>
-              <th>Education</th>
-              <th>Actions</th>
+              <th scope="col" className="md:px-3 py-3">Student Info</th>
+              <th scope="col" className="md:px-3 py-3">Track & Branch</th>
+              <th scope="col" className="md:px-3 py-3 hidden md:block">Education</th>
+              <th scope="col" className="md:px-3 py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +70,9 @@ function ViewAndExportGraduates() {
           </tbody>
         </table>
       </div>
+      {grads.length === 0 && !loading && !error && (
+        <div className="text-center py-4">No graduates found.</div>
+      )}
     </div>
   );
 }
