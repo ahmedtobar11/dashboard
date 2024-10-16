@@ -11,14 +11,13 @@ function ViewAdmins() {
 
   // const [selectedBranch, setSelectedBranch] = useState("All");
   const [admins, setAdmins] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchAdmins = async () => {
     try {
-      setIsLoading(true);
       const response = await adminApiRequests.getAllAdmins();
       setAdmins(response.admins);
     } catch (error) {
@@ -59,7 +58,6 @@ function ViewAdmins() {
         setAdmins((prevAdmins) =>
           prevAdmins.filter((admin) => admin._id !== adminToDelete._id)
         );
-        console.log("Admin deleted successfully!");
       } catch (error) {
         console.error("Error deleting admin:", error);
         setError("Failed to delete admin. Please try again later.");
@@ -105,7 +103,7 @@ function ViewAdmins() {
             </select>
           </div> */}
 
-<div className="w-full overflow-x-auto">
+          <div className="w-full overflow-x-auto">
             <table className="table-auto w-full  bg-main-w shadow-md rounded-lg  sm:text-base">
               <thead>
                 <tr className="bg-gray-100 text-center  text-sm md:text-lg lg:text-2xl">
@@ -125,7 +123,9 @@ function ViewAdmins() {
                     <td className="px-1 py-2 sm:px-4 ">
                       {admin.branch?.name || "No branch"}
                     </td>
-                    <td className="px-1 py-2 sm:px-4 break-all  ">{admin.email}</td>
+                    <td className="px-1 py-2 sm:px-4 break-all  ">
+                      {admin.email}
+                    </td>
                     <td className="px-1 py-2 sm:px-4">
                       <button
                         className="text-main text-xs lg:text-lg font-bold flex items-center justify-center gap-1 hover:scale-105 transition-transform mx-auto"
@@ -139,7 +139,7 @@ function ViewAdmins() {
               </tbody>
             </table>
           </div>
-                  </div>
+        </div>
       ) : (
         <NoData
           title={"No Admins"}

@@ -38,9 +38,7 @@ const AppRoutes = () => {
         />
         <Route
           path="/"
-          element={
-            <PrivateRoute element={<Home />} isRequiredToLogIn={false} />
-          }
+          element={<PrivateRoute element={<Home />} isRequiredToLogIn={true} />}
         >
           <Route index element={<Dashboard />} />
           <Route

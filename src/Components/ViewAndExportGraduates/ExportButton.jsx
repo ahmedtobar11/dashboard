@@ -3,7 +3,6 @@ import * as XLSX from "xlsx";
 import { Download } from "lucide-react";
 
 function ExportButton({ grads }) {
-  console.log(grads);
   const handleExport = function () {
     let workBook = XLSX.utils.book_new();
     let workSheet = XLSX.utils.json_to_sheet(grads);
