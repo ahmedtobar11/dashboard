@@ -3,13 +3,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { loginSchema } from "../../utils/validations/adminSchemas";
 import Button from "../ui/Button";
-import authApiRequests from "../../services/apiRequests/authApiRequests";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import authServices from "../../services/authServices";
+import { useAdminContext } from "../../contexts/AdminContext";
 
 export default function LoginForm() {
+  const { setAdmin } = useAdminContext();
+
   const [isLoading, setIsLoading] = useState(false);
   const [dataError, setError] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const {
     register,
@@ -20,13 +23,10 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setIsLoading(true);
-      const response = await authApiRequests.login(data);
-      console.log(response.data);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      navigate("/", { replace: true }); 
+      authServices.login(data, setAdmin);
+      navigate("/", { replace: true });
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {

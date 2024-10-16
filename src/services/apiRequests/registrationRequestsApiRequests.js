@@ -5,6 +5,11 @@ const getAllRegistrationRequests = async () => {
   return response.data;
 };
 
+const getRegistrationRequestsByBranch = async () => {
+  const response = await apiInstance.get("registration-requests/");
+  return response.data;
+};
+
 const rejectRegistrationRequest = async (id) => {
   const response = await apiInstance.delete(
     `registration-requests/${id}?action=reject`
@@ -21,6 +26,7 @@ const acceptRegistrationRequest = async (id) => {
 
 export default {
   getAllRegistrationRequests,
+  getRegistrationRequestsByBranch,
   rejectRegistrationRequest,
   acceptRegistrationRequest,
 };
