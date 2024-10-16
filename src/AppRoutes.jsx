@@ -14,6 +14,7 @@ import CreateNewAdmin from "./Layouts/CreateNewAdmin";
 import ViewAdmins from "./Layouts/ViewAdmins";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Components/privateRoute/PrivateRoute";
+import { BranchesAndTracksProvider } from "./contexts/BranchesAndTracksContext";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -49,7 +50,15 @@ const AppRoutes = () => {
             path="view-and-export-graduates"
             element={<ViewAndExportGraduates />}
           />
-          <Route path="create-new-admin" element={<CreateNewAdmin />} />
+
+          <Route
+            path="create-new-admin"
+            element={
+              <BranchesAndTracksProvider>
+                <CreateNewAdmin />
+              </BranchesAndTracksProvider>
+            }
+          />
           <Route path="view-admins" element={<ViewAdmins />} />
         </Route>
         <Route path="*" element={<NotFound />} />
