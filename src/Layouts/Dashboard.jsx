@@ -1,6 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import { Fingerprint, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
+import Loading from '../Components/ui/Loading';
 import {
   PieChart,
   Pie,
@@ -13,40 +15,18 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import chartsDatApiRequests from "../services/apiRequests/chartsDatApiRequests"; 
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
-  {
-    name: "Validate Graduate",
-    link: "/registration-requests",
-    icon: Fingerprint,
-  },
+  { name: "Validate Graduate", link: "/registration-requests", icon: Fingerprint },
 ];
-
-const graduateData = [
-  { branch: "Cairo", Graduates: 120 },
-  { branch: "Alex", Graduates: 60 },
-  { branch: "Port Said", Graduates: 20 },
-  { branch: "Aswan", Graduates: 50 },
-  { branch: "Assiut", Graduates: 45 },
-  { branch: "Ismailia", Graduates: 30 },
-  { branch: "Mansoura", Graduates: 25 },
-  { branch: "Tanta", Graduates: 35 },
-  { branch: "Sohag", Graduates: 40 },
-  { branch: "Minya", Graduates: 22 },
-  { branch: "Zagazig", Graduates: 28 },
-  { branch: "Benha", Graduates: 33 },
-  { branch: "Beni Suef", Graduates: 27 },
-  { branch: "Fayoum", Graduates: 15 },
-  { branch: "Qena", Graduates: 18 },
-];
-
-const totalGraduates = graduateData.reduce(
-  (sum, branch) => sum + branch.Graduates,
-  0
-);
 
 const Dashboard = () => {
+  const [graduateData, setGraduateData] = useState([]);
+  const [totalGraduates, setTotalGraduates] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { branches, tracks } = useBranchesAndTracks();
 
   const COLORS = ["#9d312e", "#f54d48"];
@@ -57,9 +37,36 @@ const Dashboard = () => {
   ];
 
   const pieChartData = [
-    { name: "Port Said Graduates", value: 20 },
-    { name: "Other Graduates", value: totalGraduates - 20 },
+    { name: "Port Said Graduates", value: graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0 },
+    { name: "Other Graduates", value: totalGraduates - (graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0) },
   ];
+
+
+const {getChartsData}=chartsDatApiRequests
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await getChartsData();
+      console.log(response)
+      if (response.data && response.data.success && Array.isArray(response.data.data)) {
+        setGraduateData(response.data.data);
+        const total = response.data.data.reduce((sum, branch) => sum + (branch.graduates || 0), 0);
+        setTotalGraduates(total);
+      } else {
+        console.error('Unexpected API response format:', response.data);
+        setError('Received unexpected data format from the server. Please try again later or contact support.');
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      setError(error.message || 'An error occurred while fetching data. Please try again later or contact support.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -68,15 +75,20 @@ const Dashboard = () => {
         <div className="bg-white p-2 border border-gray-300 rounded shadow">
           <p className="font-bold text-xs sm:text-sm">{data.name}</p>
           <p className="text-xs sm:text-sm">{`Graduates: ${data.value}`}</p>
-          <p className="text-xs sm:text-sm">{`Percentage: ${((data.value / totalGraduates) * 100).toFixed(
-            2
-          )}%`}</p>
+          <p className="text-xs sm:text-sm">{`Percentage: ${((data.value / totalGraduates) * 100).toFixed(2)}%`}</p>
         </div>
       );
     }
     return null;
   };
 
+  if (loading) {
+    return <Loading/>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <div className="container max-w-screen-xl mx-auto px-4 md:mt-2 bg-main-light rounded-lg shadow-lg pt-3 pb-1">
       <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-center text-main mb-6">
@@ -109,10 +121,11 @@ const Dashboard = () => {
             <YAxis tick={{ fontSize: 10 }} />
             <Tooltip />
             <Legend wrapperStyle={{ fontSize: '10px' }} />
-            <Bar dataKey="Graduates" fill="#9d312e" />
+            <Bar dataKey="graduates" fill="#9d312e" />
           </BarChart>
         </ResponsiveContainer>
       </div>
+
 
       <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md flex-1">
