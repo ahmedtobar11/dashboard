@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useAdminContext } from "../../contexts/AdminContext";
-import NotFound from "../../pages/NotFound";
 import Loading from "../ui/Loading";
 
 const PrivateRoute = ({ element, isRequiredToLogIn, isSuperAdminRequired = true }) => {
