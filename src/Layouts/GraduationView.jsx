@@ -2,10 +2,7 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
 import GraduatesFilterPanel from "../Components/ViewAndExportGraduates/GraduatesFilterPanel";
-import GraduatesTable from "../Components/ViewAndExportGraduates/GraduatesTable";
-import useGraduates from "../hooks/useGraduates";
-import NoData from "../Components/ui/NoData";
-import Loading from "../Components/ui/Loading";
+import GraduatesTableContainer from "../Components/ViewAndExportGraduates/GraduatesTableContainer";
 
 const GRADUATES_PER_PAGE = 6;
 
@@ -22,7 +19,6 @@ export const GraduatesView = () => {
   const { branches } = useBranchesAndTracks();
   const navigate = useNavigate();
   const location = useLocation();
-  const [expandedRow, setExpandedRow] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Get initial filters from URL
@@ -51,66 +47,46 @@ export const GraduatesView = () => {
     const newSearch = params.toString();
     const currentSearch = location.search.replace(/^\?/, "");
 
-    // Only update URL if the search params actually changed
     if (newSearch !== currentSearch) {
       navigate(`${location.pathname}?${newSearch}`, { replace: true });
     }
   }, [filters, navigate, location.pathname]);
 
-  // Handle filter changes
   const handleFilterChange = useCallback((newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
     setCurrentPage(1);
   }, []);
 
-  // Handle page changes
-  const handlePageChange = useCallback((newPage) => {
-    setCurrentPage(newPage);
-  }, []);
-
-  // Reset filters
   const handleResetFilters = useCallback(() => {
     setFilters(INITIAL_FILTERS);
     setCurrentPage(1);
   }, []);
 
-  // Memoized query parameters
-  const queryParams = useMemo(
+  const filterPanelProps = useMemo(
+    () => ({
+      filters,
+      branches,
+      onFilterChange: handleFilterChange,
+      onReset: handleResetFilters,
+    }),
+    [filters, branches, handleFilterChange, handleResetFilters]
+  );
+
+  const tableContainerProps = useMemo(
     () => ({
       currentPage,
-      itemsPerPage: GRADUATES_PER_PAGE,
+      setCurrentPage,
       filters,
+      itemsPerPage: GRADUATES_PER_PAGE,
     }),
     [currentPage, filters]
   );
 
-  // Fetch graduates data
-  const { grads, loading, error, totalPages } = useGraduates(queryParams);
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) return <div className="error-message">{error}</div>;
-
   return (
     <div className="container mx-auto py-4 lg:px-8 -z-20">
       <div className="flex flex-col gap-6">
-        <GraduatesFilterPanel
-          filters={filters}
-          branches={branches}
-          onFilterChange={handleFilterChange}
-          onReset={handleResetFilters}
-        />
-        <GraduatesTable
-          grads={grads}
-          loading={loading}
-          expandedRow={expandedRow}
-          setExpandedRow={setExpandedRow}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <GraduatesFilterPanel {...filterPanelProps} />
+        <GraduatesTableContainer {...tableContainerProps} />
       </div>
     </div>
   );
