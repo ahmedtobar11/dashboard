@@ -1,8 +1,6 @@
 import Select from "react-select";
 
-function SelectComponent(props) {
-  const { placeholder, options, onChange } = props;
-
+function SelectComponent({ placeholder, options, value, onChange }) {
   const customStyle = {
     control: (provided) => ({
       ...provided,
@@ -27,11 +25,11 @@ function SelectComponent(props) {
 
   return (
     <Select
-      options={options}
-      styles={customStyle}
-      onChange={onChange}
       placeholder={placeholder}
-      // value={value}
+      options={options}
+      value={options.find((option) => option.value === value)}
+      onChange={onChange}
+      styles={customStyle}
     />
   );
 }

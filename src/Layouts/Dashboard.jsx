@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Fingerprint, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
-import Loading from '../Components/ui/Loading';
+import Loading from "../Components/ui/Loading";
 import {
   PieChart,
   Pie,
@@ -15,12 +15,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import chartsDatApiRequests from "../services/apiRequests/chartsDatApiRequests"; 
 import { useAdminContext } from "../contexts/AdminContext";
+import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests";
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
-  { name: "Validate Graduate", link: "/registration-requests", icon: Fingerprint },
+  {
+    name: "Validate Graduate",
+    link: "/registration-requests",
+    icon: Fingerprint,
+  },
 ];
 
 const Dashboard = () => {
@@ -40,36 +44,53 @@ console.log(admin)
   ];
 
   const pieChartData = [
-    { name: "Port Said Graduates", value: graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0 },
-    { name: "Other Graduates", value: totalGraduates - (graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0) },
+    {
+      name: "Port Said Graduates",
+      value:
+        graduateData.find((branch) => branch.branch === "Portsaid")
+          ?.graduates || 0,
+    },
+    {
+      name: "Other Graduates",
+      value:
+        totalGraduates -
+        (graduateData.find((branch) => branch.branch === "Portsaid")
+          ?.graduates || 0),
+    },
   ];
-
-
-const {getChartsData}=chartsDatApiRequests
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
 
   const fetchDashboardData = async () => {
     try {
-      setLoading(true);
-      const response = await getChartsData();
-      console.log(response)
-      if (response.data && response.data.success && Array.isArray(response.data.data)) {
+      const response = await chartsDataApiRequests.getChartsData();
+      if (
+        response.data &&
+        response.data.success &&
+        Array.isArray(response.data.data)
+      ) {
         setGraduateData(response.data.data);
-        const total = response.data.data.reduce((sum, branch) => sum + (branch.graduates || 0), 0);
+        const total = response.data.data.reduce(
+          (sum, branch) => sum + (branch.graduates || 0),
+          0
+        );
         setTotalGraduates(total);
       } else {
-        console.error('Unexpected API response format:', response.data);
-        setError('Received unexpected data format from the server. Please try again later or contact support.');
+        setError(
+          "Received unexpected data format from the server. Please try again later or contact support."
+        );
       }
     } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-      setError(error.message || 'An error occurred while fetching data. Please try again later or contact support.');
+      setError(
+        error.message ||
+          "An error occurred while fetching data. Please try again later or contact support."
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -78,7 +99,10 @@ const {getChartsData}=chartsDatApiRequests
         <div className="bg-white p-2 border border-gray-300 rounded shadow">
           <p className="font-bold text-xs sm:text-sm">{data.name}</p>
           <p className="text-xs sm:text-sm">{`Graduates: ${data.value}`}</p>
-          <p className="text-xs sm:text-sm">{`Percentage: ${((data.value / totalGraduates) * 100).toFixed(2)}%`}</p>
+          <p className="text-xs sm:text-sm">{`Percentage: ${(
+            (data.value / totalGraduates) *
+            100
+          ).toFixed(2)}%`}</p>
         </div>
       );
     }
@@ -86,7 +110,7 @@ const {getChartsData}=chartsDatApiRequests
   };
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   if (error) {
@@ -123,12 +147,11 @@ const {getChartsData}=chartsDatApiRequests
             <XAxis dataKey="branch" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} />
             <Tooltip />
-            <Legend wrapperStyle={{ fontSize: '10px' }} />
+            <Legend wrapperStyle={{ fontSize: "10px" }} />
             <Bar dataKey="graduates" fill="#9d312e" />
           </BarChart>
         </ResponsiveContainer>
       </div>
-
 
       <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md flex-1">
@@ -140,7 +163,7 @@ const {getChartsData}=chartsDatApiRequests
               <XAxis dataKey="name" tick={{ fontSize: 10 }} />
               <YAxis tick={{ fontSize: 10 }} />
               <Tooltip />
-              <Legend wrapperStyle={{ fontSize: '10px' }} />
+              <Legend wrapperStyle={{ fontSize: "10px" }} />
               <Bar dataKey="count" fill="#9d312e" />
             </BarChart>
           </ResponsiveContainer>
@@ -192,7 +215,7 @@ const {getChartsData}=chartsDatApiRequests
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ fontSize: '10px' }} />
+              <Legend wrapperStyle={{ fontSize: "10px" }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
