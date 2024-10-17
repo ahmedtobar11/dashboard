@@ -3,6 +3,7 @@ import Loading from "../ui/Loading";
 import TableRow from "./TableRow";
 
 import ExportButton from "./ExportButton";
+import NoData from "../ui/NoData";
 
 export const GraduatesTable = memo(
   ({
@@ -41,14 +42,24 @@ export const GraduatesTable = memo(
               </tr>
             </thead>
             <tbody>
-              {grads.map((grad) => (
-                <TableRow
-                  key={grad._id}
-                  grad={grad}
-                  onExpandRow={setExpandedRow}
-                  isExpanded={expandedRow === grad._id}
+              {grads?.length > 0 ? (
+                grads.map((grad) => (
+                  <TableRow
+                    key={grad._id}
+                    grad={grad}
+                    onExpandRow={setExpandedRow}
+                    isExpanded={expandedRow === grad._id}
+                  />
+                ))
+              ) : (
+                <NoData
+                  title="EMPTY"
+                  description="No graduates found."
+                  buttonText="DASHBOARD"
+                  buttonTo="/"
+                  insideTable={true}
                 />
-              ))}
+              )}
             </tbody>
           </table>
         </div>
