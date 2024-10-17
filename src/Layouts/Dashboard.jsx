@@ -15,7 +15,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useAdminContext } from "../contexts/AdminContext";
 import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests";
 
 const menus = [
@@ -28,8 +27,6 @@ const menus = [
 ];
 
 const Dashboard = () => {
-  const { admin } = useAdminContext();
-console.log(admin)
   const [graduateData, setGraduateData] = useState([]);
   const [totalGraduates, setTotalGraduates] = useState(0);
   const [loading, setLoading] = useState(true);
