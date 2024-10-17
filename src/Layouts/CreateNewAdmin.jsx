@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { createAdmin } from '../services/apiRequests/adminApiRequests';
+import { createAdmin } from "../services/apiRequests/adminApiRequests";
 import { useNavigate } from "react-router-dom";
+import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
 
 export default function CreateNewAdmin() {
   const navigate = useNavigate();
 
-  const branches = [
-    "Portsaid",
-    "Ismailia",
-    "Smart Village",
-    "New Capital",
-    "Cairo University",
-  ];
+  const { branches } = useBranchesAndTracks();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,7 +28,9 @@ export default function CreateNewAdmin() {
     const errors = { ...validationErrors };
 
     if (value === "") {
-      errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      errors[field] = `${
+        field.charAt(0).toUpperCase() + field.slice(1)
+      } is required`;
     } else {
       delete errors[field];
     }
@@ -58,7 +55,6 @@ export default function CreateNewAdmin() {
       setResponseMessage(response.success);
       setErrorMessage("");
       navigate("/view-admins");
-
     } catch (error) {
       const errorMsg = error.message || "Failed to create admin";
       setErrorMessage(errorMsg);
@@ -80,7 +76,9 @@ export default function CreateNewAdmin() {
 
   return (
     <div className="mt-10 p-8 flex flex-col rounded-xl space-y-8 border border-main bg-main-light shadow-md max-w-2xl mx-auto">
-      <h1 className="text-center text-3xl font-semibold text-main">Create New Admin</h1>
+      <h1 className="text-center text-3xl font-semibold text-main">
+        Create New Admin
+      </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <label className="block">
@@ -88,21 +86,27 @@ export default function CreateNewAdmin() {
           <input
             type="text"
             name="fullName"
-            className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${validationErrors.fullName ? 'border-red-500' : ''}`}
+            className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${
+              validationErrors.fullName ? "border-red-500" : ""
+            }`}
             placeholder="Enter admin's full name"
             value={formData.fullName}
             onChange={handleInputChange}
             onBlur={handleBlur}
             autoComplete="name"
           />
-          {validationErrors.fullName && <p className="text-red-500">{validationErrors.fullName}</p>}
+          {validationErrors.fullName && (
+            <p className="text-red-500">{validationErrors.fullName}</p>
+          )}
         </label>
 
         <label className="block">
           <span className="text-gray-700">Admin Branch</span>
           <select
             name="branch"
-            className={`select select-bordered w-full mt-2 p-2 text-gray-900 ${validationErrors.branch ? 'border-red-500' : ''}`}
+            className={`select select-bordered w-full mt-2 p-2 text-gray-900 ${
+              validationErrors.branch ? "border-red-500" : ""
+            }`}
             value={formData.branch}
             onChange={handleInputChange}
             onBlur={handleBlur}
@@ -111,13 +115,15 @@ export default function CreateNewAdmin() {
             <option value="" disabled>
               Select an admin branch
             </option>
-            {branches.map((branch, index) => (
-              <option key={index} value={branch}>
-                {branch}
+            {branches.map((branch) => (
+              <option key={branch._id} value={branch.name}>
+                {branch.name}
               </option>
             ))}
           </select>
-          {validationErrors.branch && <p className="text-red-500">{validationErrors.branch}</p>}
+          {validationErrors.branch && (
+            <p className="text-red-500">{validationErrors.branch}</p>
+          )}
         </label>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-6 lg:space-y-0">
@@ -126,14 +132,18 @@ export default function CreateNewAdmin() {
             <input
               type="email"
               name="email"
-              className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${validationErrors.email ? 'border-red-500' : ''}`}
+              className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${
+                validationErrors.email ? "border-red-500" : ""
+              }`}
               placeholder="admin@example.com"
               value={formData.email}
               onChange={handleInputChange}
               onBlur={handleBlur}
               autoComplete="email"
             />
-            {validationErrors.email && <p className="text-red-500">{validationErrors.email}</p>}
+            {validationErrors.email && (
+              <p className="text-red-500">{validationErrors.email}</p>
+            )}
           </label>
 
           <label className="w-full">
@@ -141,14 +151,18 @@ export default function CreateNewAdmin() {
             <input
               type="password"
               name="password"
-              className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${validationErrors.password ? 'border-red-500' : ''}`}
+              className={`input input-bordered w-full mt-2 p-2 text-gray-900 ${
+                validationErrors.password ? "border-red-500" : ""
+              }`}
               placeholder="Enter a secure password"
               value={formData.password}
               onChange={handleInputChange}
               onBlur={handleBlur}
               autoComplete="new-password"
             />
-            {validationErrors.password && <p className="text-red-500">{validationErrors.password}</p>}
+            {validationErrors.password && (
+              <p className="text-red-500">{validationErrors.password}</p>
+            )}
           </label>
         </div>
 
@@ -162,8 +176,14 @@ export default function CreateNewAdmin() {
         </div>
       </form>
 
-      {responseMessage && <p className="text-green-500 text-center mt-4 text-2xl">{responseMessage}</p>}
-      {errorMessage && <p className="text-red-500 text-center mt-4">{errorMessage}</p>}
+      {responseMessage && (
+        <p className="text-green-500 text-center mt-4 text-2xl">
+          {responseMessage}
+        </p>
+      )}
+      {errorMessage && (
+        <p className="text-red-500 text-center mt-4">{errorMessage}</p>
+      )}
     </div>
   );
 }

@@ -15,7 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import chartsDataApiRequests from "../services/apiRequests/chartsDatApiRequests"; 
+import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests"; 
 import { useAdminContext } from "../contexts/AdminContext";
 
 const menus = [

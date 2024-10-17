@@ -9,11 +9,11 @@ import Login from "./pages/Login";
 import Dashboard from "./Layouts/Dashboard";
 import Home from "./pages/Home";
 import RegistrationRequests from "./Layouts/RegistrationRequests";
-import ViewAndExportGraduates from "./Layouts/ViewAndExportGraduates";
 import CreateNewAdmin from "./Layouts/CreateNewAdmin";
 import ViewAdmins from "./Layouts/ViewAdmins";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Components/privateRoute/PrivateRoute";
+import GraduatesView from "./Layouts/GraduatesView";
 import Forbidden from "./Layouts/Forbidden";
 
 const ScrollToTop = () => {
@@ -57,11 +57,9 @@ const AppRoutes = () => {
             path="registration-requests"
             element={<RegistrationRequests />}
           />
-          <Route
-            path="view-and-export-graduates"
-            element={<ViewAndExportGraduates />}
-          />
-
+          <Route path="view-and-export-graduates" element={<GraduatesView />} />
+          <Route path="create-new-admin" element={<CreateNewAdmin />} />
+          <Route path="view-admins" element={<ViewAdmins />} />
           <Route
             path="create-new-admin"
             element={
@@ -69,12 +67,6 @@ const AppRoutes = () => {
                 element={<CreateNewAdmin />}
                 isRequiredToLogIn={true}
               />
-            }
-          />
-          <Route
-            path="view-admins"
-            element={
-              <PrivateRoute element={<ViewAdmins />} isRequiredToLogIn={true} />
             }
           />
           <Route path="forbidden" element={<Forbidden />} />

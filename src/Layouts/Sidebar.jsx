@@ -75,16 +75,16 @@ const Sidebar = ({ open, setOpen }) => {
       >
         {open && (
           <div className="flex flex-col justify-center items-center border-b-2 pt-1">
-            <div className="whitespace-pre duration-500  text-text">
-              <CircleUser size={75} />
-            </div>
-            <p className="text-text whitespace-pre duration-500">
-              {admin.fullName}
-            </p>
-            <p className="mb-3   text-center text-text whitespace-pre duration-500">
-              {admin.email}
-            </p>
+          <div className="h-24 w-24 rounded-full  border-4 border-main   overflow-hidden">
+          <img src="admin.jpg" alt=""  className=" "/>
           </div>
+          <p className="text-text whitespace-pre duration-500">
+            {admin.fullName}
+          </p>
+          <p className="mb-3   text-center text-text whitespace-pre duration-500">
+            {admin.email}
+          </p>
+        </div>
         )}
 
         <div className="flex-grow">
