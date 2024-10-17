@@ -8,7 +8,6 @@ import NoData from "../Components/ui/NoData";
 
 function ViewAndExportGraduates() {
   const { admin } = useAdminContext();
-
   const [grads, setGrads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
