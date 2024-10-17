@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Fingerprint, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
+import Loading from '../Components/ui/Loading';
 import {
   PieChart,
   Pie,
@@ -15,6 +15,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import chartsDatApiRequests from "../services/apiRequests/chartsDatApiRequests"; 
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
@@ -28,35 +29,6 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const { branches, tracks } = useBranchesAndTracks();
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
-  const fetchDashboardData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get('http://localhost:8080/api/v1/graduates/dashboard-data', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-      
-      if (response.data && response.data.success && Array.isArray(response.data.data)) {
-        setGraduateData(response.data.data);
-        const total = response.data.data.reduce((sum, branch) => sum + (branch.graduates || 0), 0);
-        setTotalGraduates(total);
-      } else {
-        console.error('Unexpected API response format:', response.data);
-        setError('Received unexpected data format from the server. Please try again later or contact support.');
-      }
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-      setError(error.response?.data?.error || 'An error occurred while fetching data. Please try again later or contact support.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const COLORS = ["#9d312e", "#f54d48"];
 
   const branchAndTrackData = [
@@ -68,6 +40,33 @@ const Dashboard = () => {
     { name: "Port Said Graduates", value: graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0 },
     { name: "Other Graduates", value: totalGraduates - (graduateData.find(branch => branch.branch === "Portsaid")?.graduates || 0) },
   ];
+
+
+const {getChartsData}=chartsDatApiRequests
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await getChartsData();
+      console.log(response)
+      if (response.data && response.data.success && Array.isArray(response.data.data)) {
+        setGraduateData(response.data.data);
+        const total = response.data.data.reduce((sum, branch) => sum + (branch.graduates || 0), 0);
+        setTotalGraduates(total);
+      } else {
+        console.error('Unexpected API response format:', response.data);
+        setError('Received unexpected data format from the server. Please try again later or contact support.');
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      setError(error.message || 'An error occurred while fetching data. Please try again later or contact support.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -84,7 +83,7 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (error) {
