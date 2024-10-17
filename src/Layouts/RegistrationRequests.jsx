@@ -17,7 +17,6 @@ function RegistrationRequests() {
   const fetchData = async () => {
     try {
       let response;
-      console.log(admin)
       if (admin?.role === "super admin") {
         response =
           await registrationRequestsApiRequests.getAllRegistrationRequests();
@@ -26,7 +25,6 @@ function RegistrationRequests() {
           await registrationRequestsApiRequests.getRegistrationRequestsByBranch();
       }
       setRegistrationRequests(response.requests);
-      console.log(registrationRequests)
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
@@ -87,7 +85,7 @@ function RegistrationRequests() {
       {registrationRequests.length > 0 ? (
         <div className="max-w-3xl mx-auto p-6">
           <h1 className="text-2xl font-medium mb-6 text-center text-main">
-            ITi graduate applications
+            ITI graduate applications
           </h1>
           {registrationRequests.map((registrationRequest) => (
             <RequestCard
@@ -102,8 +100,8 @@ function RegistrationRequests() {
       ) : (
         <NoData
           title="EMPTY"
-          description="No Requests to show"
-          buttonText="home"
+          description="No Requests found."
+          buttonText="DASHBOARD"
           buttonTo="/"
         />
       )}

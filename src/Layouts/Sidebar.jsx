@@ -13,8 +13,7 @@ import authServices from "../services/authServices";
 import { useAdminContext } from "../contexts/AdminContext";
 
 const Sidebar = ({ open, setOpen }) => {
-  const { setAdmin } = useAdminContext();
-  const { admin } = useAdminContext();
+  const { admin, setAdmin } = useAdminContext();
 
   const navigate = useNavigate();
 
