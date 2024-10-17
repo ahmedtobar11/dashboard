@@ -7,8 +7,10 @@ const getFilteredGradsSuperAdmin = async (queryParams = "") => {
   return response.data;
 };
 
-const getFilteredGradsByBranch = async () => {
-  const response = await apiInstance.get("graduates/");
+const getFilteredGradsByBranch = async (queryParams = "") => {
+  const response = await apiInstance.get("graduates/", {
+    params: queryParams,
+  });
   return response.data;
 };
 

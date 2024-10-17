@@ -45,22 +45,24 @@ const useGraduates = (queryParams = {}) => {
             params
           );
         } else if (admin?.role === "admin") {
+          const queryParams = {
+            page: params.page,
+            limit: params.limit,
+            fullName: params.fullName,
+            cityOfBirth: params.cityOfBirth,
+            branch: params.branch,
+            itiGraduationYear: params.itiGraduationYear,
+            preferredTeachingBranches: params.preferredTeachingBranches,
+            interestedInTeaching: params.interestedInTeaching,
+          };
           response = await graduatesApiRequests.getFilteredGradsByBranch(
-            params.page,
-            params.limit,
-            params.fullName,
-            params.cityOfBirth,
-            params.branch,
-            params.itiGraduationYear,
-            params.preferredTeachingBranches,
-            params.interestedInTeaching
+            queryParams
           );
         }
 
-        // Update state with the fetched graduates data
         if (response && response.graduates && response.graduates.length > 0) {
-          setGrads(response.graduates); // Corrected field
-          setTotalPages(response.paginationMetaData.pagesCount); // Corrected total pages
+          setGrads(response.graduates);
+          setTotalPages(response.paginationMetaData.pagesCount);
         } else {
           setGrads([]);
           setTotalPages(1);
@@ -70,7 +72,7 @@ const useGraduates = (queryParams = {}) => {
           "Failed to fetch graduates: " +
             (err.message || "Something went wrong, please try again later.")
         );
-        setGrads([]); // Corrected to setGrads
+        setGrads([]);
         setTotalPages(1);
       }
 

@@ -1,9 +1,12 @@
 import React, { memo, useMemo } from "react";
 import SelectComponent from "../../Components/ui/SelectComponent";
 import { cities } from "../../utils/cities.json";
+import { useAdminContext } from "../../contexts/AdminContext";
 
 export const GraduatesFilterPanel = memo(
   ({ filters, branches, onFilterChange, onReset }) => {
+    const { admin } = useAdminContext();
+
     const handleChange = (key, value) => {
       onFilterChange({ [key]: value });
     };
@@ -108,25 +111,31 @@ export const GraduatesFilterPanel = memo(
               placeholder: "Select Teaching Interest",
               label: "Interested in Teaching",
             },
-          ].map(({ key, options, placeholder, label }) => (
-            <div key={key}>
-              <label
-                htmlFor={key}
-                className="block text-sm font-medium text-gray-700"
-              >
-                {label}
-              </label>
-              <SelectComponent
-                id={key}
-                options={options}
-                value={filters[key]}
-                onChange={(option) => handleChange(key, option.value)}
-                placeholder={placeholder}
-                className="w-full"
-                title={`Filter by ${label}`}
-              />
-            </div>
-          ))}
+          ]
+            .filter(
+              ({ key }) =>
+                admin.role === "superAdmin" ||
+                key !== "preferredTeachingBranches"
+            )
+            .map(({ key, options, placeholder, label }) => (
+              <div key={key}>
+                <label
+                  htmlFor={key}
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  {label}
+                </label>
+                <SelectComponent
+                  id={key}
+                  options={options}
+                  value={filters[key]}
+                  onChange={(option) => handleChange(key, option.value)}
+                  placeholder={placeholder}
+                  className="w-full"
+                  title={`Filter by ${label}`}
+                />
+              </div>
+            ))}
         </div>
 
         {/* Reset Filters Button */}

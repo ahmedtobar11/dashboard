@@ -20,50 +20,46 @@ export const GraduatesView = () => {
   const { branches } = useBranchesAndTracks();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
-  const [currentPage, setCurrentPage] = useState(1);
   const [expandedRow, setExpandedRow] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Initialize filters from URL params
-  useEffect(() => {
+  // Get initial filters from URL
+  const initialFilters = useMemo(() => {
     const params = new URLSearchParams(location.search);
-    const newFilters = { ...INITIAL_FILTERS };
-
-    Object.keys(INITIAL_FILTERS).forEach((key) => {
+    return Object.keys(INITIAL_FILTERS).reduce((acc, key) => {
       const value = params.get(key);
+      return {
+        ...acc,
+        [key]: value ? decodeURIComponent(value) : INITIAL_FILTERS[key],
+      };
+    }, {});
+  }, []);
+
+  const [filters, setFilters] = useState(initialFilters);
+
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
       if (value) {
-        newFilters[key] = decodeURIComponent(value);
+        params.set(key, value);
       }
     });
 
-    setFilters(newFilters);
-  }, [location.search]);
+    const newSearch = params.toString();
+    const currentSearch = location.search.replace(/^\?/, "");
 
-  // Update URL with current filters
-  const updateURL = useCallback(
-    (newFilters) => {
-      const params = new URLSearchParams();
-      Object.keys(newFilters).forEach((key) => {
-        if (newFilters[key]) {
-          params.set(key, newFilters[key]);
-        }
-      });
-      navigate(`${location.pathname}?${params.toString()}`, { replace: true });
-    },
-    [navigate, location.pathname]
-  );
+    // Only update URL if the search params actually changed
+    if (newSearch !== currentSearch) {
+      navigate(`${location.pathname}?${newSearch}`, { replace: true });
+    }
+  }, [filters, navigate, location.pathname]);
 
   // Handle filter changes
-  const handleFilterChange = useCallback(
-    (newFilters) => {
-      const updatedFilters = { ...filters, ...newFilters };
-      setFilters(updatedFilters);
-      updateURL(updatedFilters);
-      setCurrentPage(1);
-    },
-    [updateURL, filters]
-  );
+  const handleFilterChange = useCallback((newFilters) => {
+    setFilters((prev) => ({ ...prev, ...newFilters }));
+    setCurrentPage(1);
+  }, []);
 
   // Handle page changes
   const handlePageChange = useCallback((newPage) => {
@@ -73,9 +69,8 @@ export const GraduatesView = () => {
   // Reset filters
   const handleResetFilters = useCallback(() => {
     setFilters(INITIAL_FILTERS);
-    updateURL(INITIAL_FILTERS);
     setCurrentPage(1);
-  }, [updateURL]);
+  }, []);
 
   // Memoized query parameters
   const queryParams = useMemo(
