@@ -17,7 +17,6 @@ function RegistrationRequests() {
   const fetchData = async () => {
     try {
       let response;
-      console.log(admin)
       if (admin?.role === "super admin") {
         response =
           await registrationRequestsApiRequests.getAllRegistrationRequests();
@@ -26,7 +25,6 @@ function RegistrationRequests() {
           await registrationRequestsApiRequests.getRegistrationRequestsByBranch();
       }
       setRegistrationRequests(response.requests);
-      console.log(registrationRequests)
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
