@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Components/privateRoute/PrivateRoute";
 import { BranchesAndTracksProvider } from "./contexts/BranchesAndTracksContext";
 import GraduatesView from "./Layouts/GraduationView";
+import Forbidden from "./Layouts/Forbidden";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -34,12 +35,23 @@ const AppRoutes = () => {
         <Route
           path="/login"
           element={
-            <PrivateRoute element={<Login />} isRequiredToLogIn={false} />
+            <PrivateRoute
+              element={<Login />}
+              isRequiredToLogIn={false}
+              isSuperAdminRequired={false}
+            />
           }
         />
+
         <Route
           path="/"
-          element={<PrivateRoute element={<Home />} isRequiredToLogIn={true} />}
+          element={
+            <PrivateRoute
+              element={<Home />}
+              isRequiredToLogIn={true}
+              isSuperAdminRequired={false}
+            />
+          }
         >
           <Route index element={<Dashboard />} />
           <Route
@@ -63,8 +75,25 @@ const AppRoutes = () => {
               </BranchesAndTracksProvider>
             }
           />
-          <Route path="view-admins" element={<ViewAdmins />} />
+
+          <Route
+            path="create-new-admin"
+            element={
+              <PrivateRoute
+                element={<CreateNewAdmin />}
+                isRequiredToLogIn={true}
+              />
+            }
+          />
+          <Route
+            path="view-admins"
+            element={
+              <PrivateRoute element={<ViewAdmins />} isRequiredToLogIn={true} />
+            }
+          />
+          <Route path="forbidden" element={<Forbidden />} />
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

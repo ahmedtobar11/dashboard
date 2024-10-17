@@ -13,7 +13,7 @@ import authServices from "../services/authServices";
 import { useAdminContext } from "../contexts/AdminContext";
 
 const Sidebar = ({ open, setOpen }) => {
-  const { setAdmin } = useAdminContext();
+  const { admin, setAdmin } = useAdminContext();
 
   const navigate = useNavigate();
 
@@ -28,11 +28,13 @@ const Sidebar = ({ open, setOpen }) => {
       name: "View Admins",
       link: "/view-admins",
       icon: View,
+      role: "super-admin",
     },
     {
       name: "Create New Admin",
       link: "/create-new-admin",
       icon: UserRoundPlus,
+      role: "super-admin",
     },
     { name: "View Graduates", link: "view-and-export-graduates", icon: Search },
     {
@@ -48,8 +50,10 @@ const Sidebar = ({ open, setOpen }) => {
       margin: true,
     },
   ];
-
-  // Close sidebar on small screens
+  const filteredMenus =
+    admin?.role === "super admin"
+      ? menus
+      : menus.filter((menu) => !menu.role || menu.role === admin?.role);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1025) {
@@ -83,7 +87,7 @@ const Sidebar = ({ open, setOpen }) => {
 
         <div className="flex-grow">
           <div className="flex flex-col gap-4 relative m-4 text-text">
-            {menus.map((menu, i) => (
+            {filteredMenus.map((menu, i) => (
               <NavLink
                 to={menu.link}
                 key={i}
