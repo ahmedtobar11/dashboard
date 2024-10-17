@@ -1,16 +1,18 @@
 import apiInstance from "../interceptor/axiosInstance";
 
-const getAllGraduates = async () => {
-  const response = await apiInstance.get("graduates/all");
+const getFilteredGradsSuperAdmin = async (queryParams = "") => {
+  const response = await apiInstance.get("graduates/all", {
+    params: queryParams,
+  });
   return response.data;
 };
 
-const getGraduatesByBranch = async () => {
+const getFilteredGradsByBranch = async () => {
   const response = await apiInstance.get("graduates/");
   return response.data;
 };
 
 export default {
-  getAllGraduates,
-  getGraduatesByBranch,
+  getFilteredGradsSuperAdmin,
+  getFilteredGradsByBranch,
 };
