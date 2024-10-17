@@ -85,7 +85,7 @@ function RegistrationRequests() {
       {registrationRequests.length > 0 ? (
         <div className="max-w-3xl mx-auto p-6">
           <h1 className="text-2xl font-medium mb-6 text-center text-main">
-            ITi graduate applications
+            ITI graduate applications
           </h1>
           {registrationRequests.map((registrationRequest) => (
             <RequestCard
