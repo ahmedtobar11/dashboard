@@ -3,27 +3,28 @@ import { useAdminContext } from "../../contexts/AdminContext";
 import NotFound from "../../pages/NotFound";
 import Loading from "../ui/Loading";
 
-
-const PrivateRoute = ({ element: Element, isRequiredToLogIn, allFor = "both" }) => {
+const PrivateRoute = ({ element, isRequiredToLogIn, isSuperAdminRequired = true }) => {
   const { admin, adminContextLoading } = useAdminContext();
 
   if (adminContextLoading) {
     return <Loading />;
   }
 
-  if (isRequiredToLogIn && !admin) {
-    return <Navigate to="/login" replace />;
+  if (isSuperAdminRequired) {
+    return admin.role === "super admin" ? (
+      element
+    ) : (
+      <Navigate to="/forbidden" replace />
+    );
   }
 
-  if (!isRequiredToLogIn && admin) {
-    return <Navigate to="/" replace />;
+  if (isRequiredToLogIn) {
+    return admin ? element : <Navigate to="/login" replace />;
   }
 
-  if (allFor === "both" || (admin && allFor === admin.role)) {
-    return <Element />;
+  if (!isRequiredToLogIn) {
+    return admin ? <Navigate to="/" replace /> : element;
   }
-
-  return <NotFound />;
 };
 
 export default PrivateRoute;
