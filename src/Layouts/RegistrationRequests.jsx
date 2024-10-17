@@ -102,8 +102,8 @@ function RegistrationRequests() {
       ) : (
         <NoData
           title="EMPTY"
-          description="No Requests to show"
-          buttonText="home"
+          description="No Requests found."
+          buttonText="DASHBOARD"
           buttonTo="/"
         />
       )}
