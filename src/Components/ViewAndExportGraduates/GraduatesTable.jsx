@@ -24,23 +24,31 @@ export const GraduatesTable = memo(
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm md:text-lg text-center">
+            <thead className="text-xs md:text-lg lg:text-xl text-gray-700 uppercase bg-gray-100">
+              <tr>
+                <th scope="col" className="md:px-3 py-3">
+                  Student Info
+                </th>
+                <th scope="col" className="md:px-3 py-3">
+                  Track & Branch
+                </th>
+                <th scope="col" className="md:px-3 py-3 hidden md:block">
+                  Education
+                </th>
+                <th scope="col" className="md:px-3 py-3">
+                  Actions
+                </th>
+              </tr>
+            </thead>
             <tbody>
-              {grads?.length > 0 ? (
-                grads.map((grad) => (
-                  <TableRow
-                    key={grad._id}
-                    grad={grad}
-                    onExpandRow={setExpandedRow}
-                    isExpanded={expandedRow === grad._id}
-                  />
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4} className="text-center py-4">
-                    No graduates found matching your criteria.
-                  </td>
-                </tr>
-              )}
+              {grads.map((grad) => (
+                <TableRow
+                  key={grad._id}
+                  grad={grad}
+                  onExpandRow={setExpandedRow}
+                  isExpanded={expandedRow === grad._id}
+                />
+              ))}
             </tbody>
           </table>
         </div>

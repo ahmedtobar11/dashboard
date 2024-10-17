@@ -4,6 +4,7 @@ import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
 import GraduatesFilterPanel from "../Components/ViewAndExportGraduates/GraduatesFilterPanel";
 import GraduatesTable from "../Components/ViewAndExportGraduates/GraduatesTable";
 import useGraduates from "../hooks/useGraduates";
+import NoData from "../Components/ui/NoData";
 
 const GRADUATES_PER_PAGE = 6;
 
@@ -85,27 +86,43 @@ export const GraduatesView = () => {
   // Fetch graduates data
   const { grads, loading, error, totalPages } = useGraduates(queryParams);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   if (error) return <div className="error-message">{error}</div>;
 
   return (
-    <div className="container mx-auto py-4 lg:px-8">
-      <div className="flex flex-col gap-6">
-        <GraduatesFilterPanel
-          filters={filters}
-          branches={branches}
-          onFilterChange={handleFilterChange}
-          onReset={handleResetFilters}
+    <div className="container mx-auto py-4 lg:px-8 -z-20">
+      {grads.length > 0 ? (
+        <>
+          {" "}
+          <div className="flex flex-col gap-6">
+            <GraduatesFilterPanel
+              filters={filters}
+              branches={branches}
+              onFilterChange={handleFilterChange}
+              onReset={handleResetFilters}
+            />
+            <GraduatesTable
+              grads={grads}
+              loading={loading}
+              expandedRow={expandedRow}
+              setExpandedRow={setExpandedRow}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </>
+      ) : (
+        <NoData
+          title="EMPTY"
+          description="No graduates found."
+          buttonText="DASHBOARD"
+          buttonTo="/"
         />
-        <GraduatesTable
-          grads={grads}
-          loading={loading}
-          expandedRow={expandedRow}
-          setExpandedRow={setExpandedRow}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      )}
     </div>
   );
 };
