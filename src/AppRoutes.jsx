@@ -13,7 +13,7 @@ import CreateNewAdmin from "./Layouts/CreateNewAdmin";
 import ViewAdmins from "./Layouts/ViewAdmins";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./Components/privateRoute/PrivateRoute";
-import GraduatesView from "./Layouts/GraduationView";
+import GraduatesView from "./Layouts/GraduatesView";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
