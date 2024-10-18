@@ -25,7 +25,7 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      authServices.login(data, setAdmin);
+      await authServices.login(data, setAdmin);
       navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
