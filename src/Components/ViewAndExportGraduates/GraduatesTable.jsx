@@ -14,13 +14,18 @@ export const GraduatesTable = memo(
     currentPage,
     totalPages,
     onPageChange,
+    fetchAllGraduatesForExport,
+    filters,
   }) => {
     if (loading) return <Loading />;
 
     return (
       <div className="bg-white rounded-lg shadow">
         <div className="p-4">
-          <ExportButton grads={grads} />
+          <ExportButton
+            fetchAllGraduatesForExport={fetchAllGraduatesForExport}
+            filters={filters}
+          />
         </div>
 
         <div className="overflow-x-auto">

@@ -9,6 +9,36 @@ const useGraduates = (queryParams = {}) => {
   const [error, setError] = useState("");
   const [totalPages, setTotalPages] = useState(1);
 
+  // Function to fetch all graduates for export
+  const fetchAllGraduatesForExport = async (filters = {}) => {
+    try {
+      const params = {
+        ...filters,
+        limit: 10000, // Large number to fetch all
+      };
+
+      let response;
+
+      if (admin?.role === "super admin") {
+        response = await graduatesApiRequests.getFilteredGradsSuperAdmin(
+          params
+        );
+      } else if (admin?.role === "admin") {
+        response = await graduatesApiRequests.getFilteredGradsByBranch(params);
+      }
+
+      if (response && response.graduates) {
+        return response.graduates;
+      } else {
+        return [];
+      }
+    } catch (err) {
+      throw new Error(
+        err.message || "Failed to fetch all graduates for export"
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchGrads = async () => {
       try {
@@ -24,43 +54,22 @@ const useGraduates = (queryParams = {}) => {
         const params = {
           page: currentPage,
           limit: itemsPerPage,
+          ...filters,
         };
-
-        // Adding filters if available
-        if (filters.fullName) params.fullName = filters.fullName;
-        if (filters.cityOfBirth) params.cityOfBirth = filters.cityOfBirth;
-        if (filters.branch) params.branch = filters.branch;
-        if (filters.itiGraduationYear)
-          params.itiGraduationYear = filters.itiGraduationYear;
-        if (filters.preferredTeachingBranches)
-          params.preferredTeachingBranches = filters.preferredTeachingBranches;
-        if (filters.interestedInTeaching !== undefined)
-          params.interestedInTeaching = filters.interestedInTeaching;
 
         let response;
 
-        // Handling different roles for admin
         if (admin?.role === "super admin") {
           response = await graduatesApiRequests.getFilteredGradsSuperAdmin(
             params
           );
         } else if (admin?.role === "admin") {
-          const queryParams = {
-            page: params.page,
-            limit: params.limit,
-            fullName: params.fullName,
-            cityOfBirth: params.cityOfBirth,
-            branch: params.branch,
-            itiGraduationYear: params.itiGraduationYear,
-            preferredTeachingBranches: params.preferredTeachingBranches,
-            interestedInTeaching: params.interestedInTeaching,
-          };
           response = await graduatesApiRequests.getFilteredGradsByBranch(
-            queryParams
+            params
           );
         }
 
-        if (response && response.graduates && response.graduates.length > 0) {
+        if (response && response.graduates) {
           setGrads(response.graduates);
           setTotalPages(response.paginationMetaData.pagesCount);
         } else {
@@ -82,7 +91,7 @@ const useGraduates = (queryParams = {}) => {
     fetchGrads();
   }, [queryParams, admin]);
 
-  return { grads, loading, error, totalPages };
+  return { grads, loading, error, totalPages, fetchAllGraduatesForExport };
 };
 
 export default useGraduates;

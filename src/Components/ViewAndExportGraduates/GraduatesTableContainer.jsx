@@ -20,7 +20,8 @@ const GraduatesTableContainer = ({
     [currentPage, itemsPerPage, filters]
   );
 
-  const { grads, loading, error, totalPages } = useGraduates(queryParams);
+  const { grads, loading, error, totalPages, fetchAllGraduatesForExport } =
+    useGraduates(queryParams);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -38,6 +39,8 @@ const GraduatesTableContainer = ({
       currentPage={currentPage}
       totalPages={totalPages}
       onPageChange={handlePageChange}
+      fetchAllGraduatesForExport={fetchAllGraduatesForExport}
+      filters={filters}
     />
   );
 };
