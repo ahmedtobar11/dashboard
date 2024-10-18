@@ -1,12 +1,16 @@
 import authApiRequests from "./apiRequests/authApiRequests";
 
 const login = async (data, setAdmin) => {
-  const response = await authApiRequests.login(data);
+  try {
+    const response = await authApiRequests.login(data);
 
-  localStorage.setItem("accessToken", response.data.accessToken);
-  localStorage.setItem("admin", JSON.stringify(response.data.admin));
+    localStorage.setItem("accessToken", response.data.accessToken);
+    localStorage.setItem("admin", JSON.stringify(response.data.admin));
 
-  setAdmin(response.data.admin);
+    setAdmin(response.data.admin);
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 const logout = async (setAdmin) => {
