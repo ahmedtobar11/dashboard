@@ -58,14 +58,24 @@ const AppRoutes = () => {
             element={<RegistrationRequests />}
           />
           <Route path="view-and-export-graduates" element={<GraduatesView />} />
-          <Route path="create-new-admin" element={<CreateNewAdmin />} />
-          <Route path="view-admins" element={<ViewAdmins />} />
+          <Route
+            path="view-admins"
+            element={
+              <PrivateRoute
+                element={<CreateNewAdmin />}
+                isRequiredToLogIn={true}
+                isSuperAdminRequired={true}
+              />
+            }
+          />
+
           <Route
             path="create-new-admin"
             element={
               <PrivateRoute
                 element={<CreateNewAdmin />}
                 isRequiredToLogIn={true}
+                isSuperAdminRequired={true}
               />
             }
           />

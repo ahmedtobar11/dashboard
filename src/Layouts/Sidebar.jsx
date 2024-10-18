@@ -4,7 +4,6 @@ import {
   Search,
   Fingerprint,
   LogOut,
-  CircleUser,
   View,
   UserRoundPlus,
 } from "lucide-react";
