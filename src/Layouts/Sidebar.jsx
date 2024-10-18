@@ -78,9 +78,11 @@ const Sidebar = ({ open, setOpen }) => {
             <div className="whitespace-pre duration-500  text-text">
               <CircleUser size={75} />
             </div>
-            <p className="text-text whitespace-pre duration-500">admin name</p>
-            <p className="mb-3 text-text whitespace-pre duration-500">
-              admin@gmail.com
+            <p className="text-text whitespace-pre duration-500">
+              {admin.fullName}
+            </p>
+            <p className="mb-3   text-center text-text whitespace-pre duration-500">
+              {admin.email}
             </p>
           </div>
         )}

@@ -96,9 +96,9 @@ export default function LoginForm() {
           variant="fill"
           size="lg"
           text={isLoading ? "Logging in..." : "Login"}
-          className="text-xl md:text-3xl "
+          className="text-xl md:text-3xl mx-auto w-3/4  shadow-sm rounded-lg"
           disabled={isLoading}
-        />
+            />
       </div>
     </form>
   );

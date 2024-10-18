@@ -34,7 +34,7 @@ export const GraduatesView = () => {
   }, [location.search]);
 
   const [filters, setFilters] = useState(initialFilters);
-  const [unappliedFilters, setUnappliedFilters] = useState(initialFilters); // New state
+  const [unappliedFilters, setUnappliedFilters] = useState(initialFilters);
 
   // Update URL when filters change
   useEffect(() => {
@@ -69,11 +69,11 @@ export const GraduatesView = () => {
 
   const filterPanelProps = useMemo(
     () => ({
-      filters: unappliedFilters, // Use unappliedFilters instead of filters
+      filters: unappliedFilters,
       branches,
       onFilterChange: handleFilterChange,
       onReset: handleResetFilters,
-      onApply: handleApplyFilters, // Pass the apply handler
+      onApply: handleApplyFilters,
     }),
     [
       unappliedFilters,
