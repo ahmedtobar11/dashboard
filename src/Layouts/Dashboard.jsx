@@ -15,7 +15,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests";
+import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests"; 
+import { useAdminContext } from "../contexts/AdminContext";
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
@@ -27,6 +28,8 @@ const menus = [
 ];
 
 const Dashboard = () => {
+  const { admin } = useAdminContext();
+console.log(admin)
   const [graduateData, setGraduateData] = useState([]);
   const [totalGraduates, setTotalGraduates] = useState(0);
   const [loading, setLoading] = useState(true);
