@@ -62,7 +62,7 @@ const AppRoutes = () => {
             path="view-admins"
             element={
               <PrivateRoute
-                element={<CreateNewAdmin />}
+                element={<ViewAdmins />}
                 isRequiredToLogIn={true}
                 isSuperAdminRequired={true}
               />
