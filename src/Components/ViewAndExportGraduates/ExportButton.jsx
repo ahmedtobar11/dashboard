@@ -7,12 +7,15 @@ function ExportButton({ fetchAllGraduatesForExport, filters }) {
 
   const handleExport = async function () {
     setIsExporting(true);
-
     // Fetch all graduates for export
-    const grads = await fetchAllGraduatesForExport(filters);
+    let grads = await fetchAllGraduatesForExport(filters);
     let workBook = XLSX.utils.book_new();
-    // grads[1].preferredTeachingBranches =
-    //   grads[1].preferredTeachingBranches.join();  // convert preferredTeachingBranches into string
+    grads = grads.map((grad) => {
+      grad.preferredCoursesToTeach = grad.preferredCoursesToTeach.join();
+      grad.preferredTeachingBranches = grad.preferredTeachingBranches.join();
+      return grad;
+    });
+
     let workSheet = XLSX.utils.json_to_sheet(grads);
     XLSX.utils.book_append_sheet(workBook, workSheet, "Graduates-Sheet");
     XLSX.writeFile(workBook, "Graduates-Excel.xlsx");
