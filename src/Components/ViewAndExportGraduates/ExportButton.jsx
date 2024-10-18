@@ -11,6 +11,8 @@ function ExportButton({ fetchAllGraduatesForExport, filters }) {
     // Fetch all graduates for export
     const grads = await fetchAllGraduatesForExport(filters);
     let workBook = XLSX.utils.book_new();
+    // grads[1].preferredTeachingBranches =
+    //   grads[1].preferredTeachingBranches.join();  // convert preferredTeachingBranches into string
     let workSheet = XLSX.utils.json_to_sheet(grads);
     XLSX.utils.book_append_sheet(workBook, workSheet, "Graduates-Sheet");
     XLSX.writeFile(workBook, "Graduates-Excel.xlsx");

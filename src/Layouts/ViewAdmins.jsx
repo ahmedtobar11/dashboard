@@ -121,7 +121,7 @@ function ViewAdmins() {
                   >
                     <td className="px-1 py-2 sm:px-4  ">{admin.fullName}</td>
                     <td className="px-1 py-2 sm:px-4 ">
-                      {admin.branch?.name || "No branch"}
+                      {admin.branch || "No branch"}
                     </td>
                     <td className="px-1 py-2 sm:px-4 break-all  ">
                       {admin.email}

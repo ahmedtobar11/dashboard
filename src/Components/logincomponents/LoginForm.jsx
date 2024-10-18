@@ -28,6 +28,7 @@ export default function LoginForm() {
       authServices.login(data, setAdmin);
       navigate("/", { replace: true });
     } catch (error) {
+      console.log(error);
       setError(error.message || "Something went wrong, Please try again later");
     } finally {
       setIsLoading(false);
@@ -98,7 +99,7 @@ export default function LoginForm() {
           text={isLoading ? "Logging in..." : "Login"}
           className="text-xl md:text-3xl mx-auto w-3/4  shadow-sm rounded-lg"
           disabled={isLoading}
-            />
+        />
       </div>
     </form>
   );

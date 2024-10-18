@@ -114,7 +114,7 @@ export const GraduatesFilterPanel = memo(
           ]
             .filter(
               ({ key }) =>
-                admin.role === "superAdmin" ||
+                admin.role === "super admin" ||
                 key !== "preferredTeachingBranches"
             )
             .map(({ key, options, placeholder, label }) => (
