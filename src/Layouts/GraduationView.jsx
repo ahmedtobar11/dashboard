@@ -31,9 +31,10 @@ export const GraduatesView = () => {
         [key]: value ? decodeURIComponent(value) : INITIAL_FILTERS[key],
       };
     }, {});
-  }, []);
+  }, [location.search]);
 
   const [filters, setFilters] = useState(initialFilters);
+  const [unappliedFilters, setUnappliedFilters] = useState(initialFilters); // New state
 
   // Update URL when filters change
   useEffect(() => {
@@ -50,26 +51,37 @@ export const GraduatesView = () => {
     if (newSearch !== currentSearch) {
       navigate(`${location.pathname}?${newSearch}`, { replace: true });
     }
-  }, [filters, navigate, location.pathname]);
+  }, [filters, navigate, location.pathname, location.search]);
 
   const handleFilterChange = useCallback((newFilters) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-    setCurrentPage(1);
+    setUnappliedFilters((prev) => ({ ...prev, ...newFilters }));
   }, []);
 
   const handleResetFilters = useCallback(() => {
-    setFilters(INITIAL_FILTERS);
+    setUnappliedFilters(INITIAL_FILTERS);
     setCurrentPage(1);
   }, []);
 
+  const handleApplyFilters = useCallback(() => {
+    setFilters(unappliedFilters);
+    setCurrentPage(1);
+  }, [unappliedFilters]);
+
   const filterPanelProps = useMemo(
     () => ({
-      filters,
+      filters: unappliedFilters, // Use unappliedFilters instead of filters
       branches,
       onFilterChange: handleFilterChange,
       onReset: handleResetFilters,
+      onApply: handleApplyFilters, // Pass the apply handler
     }),
-    [filters, branches, handleFilterChange, handleResetFilters]
+    [
+      unappliedFilters,
+      branches,
+      handleFilterChange,
+      handleResetFilters,
+      handleApplyFilters,
+    ]
   );
 
   const tableContainerProps = useMemo(

@@ -4,7 +4,7 @@ import { cities } from "../../utils/cities.json";
 import { useAdminContext } from "../../contexts/AdminContext";
 
 export const GraduatesFilterPanel = memo(
-  ({ filters, branches, onFilterChange, onReset }) => {
+  ({ filters, branches, onFilterChange, onReset, onApply }) => {
     const { admin } = useAdminContext();
 
     const handleChange = (key, value) => {
@@ -139,13 +139,20 @@ export const GraduatesFilterPanel = memo(
         </div>
 
         {/* Reset Filters Button */}
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-between mt-4">
           <button
             onClick={onReset}
             className="px-4 py-2 text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-md transition-colors"
             title="Clear all filters"
           >
             Reset Filters
+          </button>
+          <button
+            onClick={onApply}
+            className="px-4 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md transition-colors"
+            title="Apply filters"
+          >
+            Apply Filters
           </button>
         </div>
       </div>
