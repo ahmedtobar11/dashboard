@@ -28,7 +28,13 @@ const GraduatesTableContainer = ({
   };
 
   if (loading) return <Loading />;
-  if (error) return <div className="error-message">{error}</div>;
+  if (error)
+    return (
+      <>
+        <Error message={error}></Error>
+        <ToastContainer />
+      </>
+    );
 
   return (
     <GraduatesTable
