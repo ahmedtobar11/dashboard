@@ -2,6 +2,8 @@ import { useState } from "react";
 import { createAdmin } from "../services/apiRequests/adminApiRequests";
 import { useNavigate } from "react-router-dom";
 import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
+import { useToast, TOAST_TYPES } from "../hooks/useToast";
+import Error from "../Components/ui/Error";
 
 export default function CreateNewAdmin() {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ export default function CreateNewAdmin() {
   const [validationErrors, setValidationErrors] = useState({});
   const [responseMessage, setResponseMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { showToast, ToastContainer } = useToast();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,10 +57,11 @@ export default function CreateNewAdmin() {
       const response = await createAdmin(formData);
       setResponseMessage(response.success);
       setErrorMessage("");
+      showToast("New admin created successfully", TOAST_TYPES.SUCCESS);
       navigate("/view-admins");
     } catch (error) {
-      const errorMsg = error.message || "Failed to create admin";
-      setErrorMessage(errorMsg);
+      setErrorMessage(error.message || "Failed to create admin");
+      showToast(error.message, TOAST_TYPES.ERROR);
       setResponseMessage("");
     }
   };
@@ -182,8 +186,11 @@ export default function CreateNewAdmin() {
         </p>
       )}
       {errorMessage && (
-        <p className="text-red-500 text-center mt-4">{errorMessage}</p>
+        <div>
+          <Error message={errorMessage} />
+        </div>
       )}
+      <ToastContainer />
     </div>
   );
 }
