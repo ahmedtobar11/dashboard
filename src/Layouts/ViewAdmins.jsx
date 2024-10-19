@@ -4,17 +4,16 @@ import NoData from "../Components/ui/NoData";
 import adminApiRequests from "../services/apiRequests/adminApiRequests";
 import Loading from "../Components/ui/Loading";
 import DeleteConfirmModal from "../Components/viewAdmins/DeleteConfirmModal";
-import { useBranchesAndTracks } from "../contexts/BranchesAndTracksContext";
+import Error from "../Components/ui/Error";
+import { useToast, TOAST_TYPES } from "../hooks/useToast";
 
 function ViewAdmins() {
-  // const { branches } = useBranchesAndTracks();
-
-  // const [selectedBranch, setSelectedBranch] = useState("All");
   const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showToast, ToastContainer } = useToast();
 
   const fetchAdmins = async () => {
     try {
@@ -24,6 +23,7 @@ function ViewAdmins() {
       setError(
         error.message || "Error Fetching admins, Please try again later"
       );
+      showToast(error.message, TOAST_TYPES.ERROR);
     } finally {
       setIsLoading(false);
     }
@@ -32,14 +32,6 @@ function ViewAdmins() {
   useEffect(() => {
     fetchAdmins();
   }, []);
-
-  // const filteredAdmins =
-  //   selectedBranch === "All"
-  //     ? admins
-  //     : admins.filter(
-  //         (admin) =>
-  //           (admin.branch?.name || "No branch assigned") === selectedBranch
-  //       );
 
   const openModal = (admin) => {
     setAdminToDelete(admin);
@@ -58,9 +50,10 @@ function ViewAdmins() {
         setAdmins((prevAdmins) =>
           prevAdmins.filter((admin) => admin._id !== adminToDelete._id)
         );
+        showToast("Admin deleted successfully", TOAST_TYPES.SUCCESS);
       } catch (error) {
-        console.error("Error deleting admin:", error);
         setError("Failed to delete admin. Please try again later.");
+        showToast(error.message, TOAST_TYPES.ERROR);
       } finally {
         closeModal();
       }
@@ -68,7 +61,12 @@ function ViewAdmins() {
   };
 
   if (error) {
-    return <div className="error-message">{error}</div>;
+    return (
+      <div className="mt-8">
+        <Error message={error.message} />
+        <ToastContainer />
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -88,20 +86,6 @@ function ViewAdmins() {
           <h1 className="text-xl sm:text-2xl md:text-3xl text-main font-bold text-center pb-4 sm:pb-6">
             Admins
           </h1>
-
-          {/* <div className="flex justify-center mb-6">
-            <select
-              value={selectedBranch}
-              onChange={(e) => setSelectedBranch(e.target.value)}
-              className="px-4 py-2 my-10 border w-4/5 border-main rounded shadow-sm"
-            >
-              {branches.map((branch, index) => (
-                <option key={index} value={branch}>
-                  {branch.name}
-                </option>
-              ))}
-            </select>
-          </div> */}
 
           <div className="w-full overflow-x-auto">
             <table className="table-auto w-full  bg-main-w shadow-md rounded-lg  sm:text-base">
@@ -139,6 +123,7 @@ function ViewAdmins() {
               </tbody>
             </table>
           </div>
+          <ToastContainer />
         </div>
       ) : (
         <NoData

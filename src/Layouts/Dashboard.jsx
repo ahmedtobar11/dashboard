@@ -15,8 +15,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests"; 
+import chartsDataApiRequests from "../services/apiRequests/chartsDataApiRequests";
 import { useAdminContext } from "../contexts/AdminContext";
+import Error from "../Components/ui/Error";
+import { useToast, TOAST_TYPES } from "../hooks/useToast";
 
 const menus = [
   { name: "View Graduates", link: "/view-and-export-graduates", icon: Search },
@@ -28,13 +30,12 @@ const menus = [
 ];
 
 const Dashboard = () => {
-  const { admin } = useAdminContext();
-console.log(admin)
   const [graduateData, setGraduateData] = useState([]);
   const [totalGraduates, setTotalGraduates] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { branches, tracks } = useBranchesAndTracks();
+  const { showToast, ToastContainer } = useToast();
 
   const COLORS = ["#9d312e", "#f54d48"];
 
@@ -73,16 +74,13 @@ console.log(admin)
           0
         );
         setTotalGraduates(total);
-      } else {
-        setError(
-          "Received unexpected data format from the server. Please try again later or contact support."
-        );
       }
     } catch (error) {
       setError(
         error.message ||
           "An error occurred while fetching data. Please try again later or contact support."
       );
+      showToast(error.message, TOAST_TYPES.ERROR);
     } finally {
       setLoading(false);
     }
@@ -114,7 +112,12 @@ console.log(admin)
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="mt-8">
+        <Error message={error} />
+        <ToastContainer />
+      </div>
+    );
   }
   return (
     <div className="container max-w-screen-xl mx-auto px-4 md:mt-2 bg-main-light rounded-lg shadow-lg pt-3 pb-1">
