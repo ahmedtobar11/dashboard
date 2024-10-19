@@ -30,6 +30,8 @@ const menus = [
 ];
 
 const Dashboard = () => {
+  const { admin } = useAdminContext();
+
   const [graduateData, setGraduateData] = useState([]);
   const [totalGraduates, setTotalGraduates] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -46,16 +48,16 @@ const Dashboard = () => {
 
   const pieChartData = [
     {
-      name: "Port Said Graduates",
+      name: admin.branch,
       value:
-        graduateData.find((branch) => branch.branch === "Portsaid")
+        graduateData.find((branch) => branch.branch === admin.branch)
           ?.graduates || 0,
     },
     {
       name: "Other Graduates",
       value:
         totalGraduates -
-        (graduateData.find((branch) => branch.branch === "Portsaid")
+        (graduateData.find((branch) => branch.branch === admin.branch)
           ?.graduates || 0),
     },
   ];
@@ -173,7 +175,7 @@ const Dashboard = () => {
         </div>
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md flex-1">
           <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-main font-bold text-center mb-6">
-            Port Said vs Other Graduates
+           {admin.branch} vs Other Graduates
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
