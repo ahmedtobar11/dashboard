@@ -1,7 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import useGraduates from "../../hooks/useGraduates";
 import Loading from "../ui/Loading";
 import GraduatesTable from "./GraduatesTable";
+import { useToast, TOAST_TYPES } from "../../hooks/useToast";
+import Error from "../ui/Error";
 
 const GraduatesTableContainer = ({
   currentPage,
@@ -10,6 +12,7 @@ const GraduatesTableContainer = ({
   itemsPerPage,
 }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+  const { showToast, ToastContainer } = useToast();
 
   const queryParams = useMemo(
     () => ({
@@ -23,12 +26,24 @@ const GraduatesTableContainer = ({
   const { grads, loading, error, totalPages, fetchAllGraduatesForExport } =
     useGraduates(queryParams);
 
+  useEffect(() => {
+    if (error) {
+      showToast(error, TOAST_TYPES.ERROR);
+    }
+  }, [error, showToast]);
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   if (loading) return <Loading />;
-  if (error) return <div className="error-message">{error}</div>;
+  if (error)
+    return (
+      <>
+        <Error message={error}></Error>
+        <ToastContainer />
+      </>
+    );
 
   return (
     <GraduatesTable

@@ -71,7 +71,11 @@ function DetailsModal({ isOpen, onClose, data }) {
               />
               <DetailRow
                 label="Preferred Courses"
-                value={data.preferredCoursesToTeach?.split(",").join(", ")}
+                value={
+                  data.preferredCoursesToTeach.length > 1
+                    ? data.preferredCoursesToTeach.join(", ")
+                    : data.preferredCoursesToTeach
+                }
               />
               <DetailRow label="Job Title" value={data.fullJobTitle} />
               <DetailRow label="Company Name" value={data.companyName} />

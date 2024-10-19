@@ -5,6 +5,8 @@ import Loading from "../Components/ui/Loading";
 import NoData from "../Components/ui/NoData";
 import registrationRequestsApiRequests from "../services/apiRequests/registrationRequestsApiRequests";
 import { useAdminContext } from "../contexts/AdminContext";
+import Error from "../Components/ui/Error";
+import { useToast, TOAST_TYPES } from "../hooks/useToast";
 
 function RegistrationRequests() {
   const { admin } = useAdminContext();
@@ -13,6 +15,7 @@ function RegistrationRequests() {
   const [isLoading, setIsLoading] = useState(true);
   const [disableBtns, setDisableBtns] = useState(false);
   const [error, setError] = useState("");
+  const { showToast, ToastContainer } = useToast();
 
   const fetchData = async () => {
     try {
@@ -27,6 +30,7 @@ function RegistrationRequests() {
       setRegistrationRequests(response.requests);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
+      showToast(error.message, TOAST_TYPES.ERROR);
     } finally {
       setIsLoading(false);
     }
@@ -47,8 +51,10 @@ function RegistrationRequests() {
           return item._id !== registrationRequest._id;
         })
       );
+      showToast("Request rejected Successfully", TOAST_TYPES.SUCCESS);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
+      showToast(error.message, TOAST_TYPES.ERROR);
     } finally {
       setDisableBtns(false);
     }
@@ -66,15 +72,22 @@ function RegistrationRequests() {
           return item._id !== registrationRequest._id;
         })
       );
+      showToast("Request accepted Successfully", TOAST_TYPES.SUCCESS);
     } catch (error) {
       setError(error.message || "Something went wrong, Please try again later");
+      showToast(error.message, TOAST_TYPES.ERROR);
     } finally {
       setDisableBtns(false);
     }
   }, []);
 
   if (error) {
-    return <div className="error-message">{error}</div>;
+    return (
+      <div className="mt-8">
+        <Error message={error} />
+        <ToastContainer />
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -105,6 +118,7 @@ function RegistrationRequests() {
           buttonTo="/"
         />
       )}
+      <ToastContainer />
     </>
   );
 }
