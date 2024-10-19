@@ -10,7 +10,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import authServices from "../services/authServices";
 import { useAdminContext } from "../contexts/AdminContext";
-import { ShieldPlus } from "lucide-react";
+import { ShieldPlus,ShieldCheck} from 'lucide-react';
 
 const Sidebar = ({ open, setOpen }) => {
   const { admin, setAdmin } = useAdminContext();
@@ -94,7 +94,7 @@ const Sidebar = ({ open, setOpen }) => {
             <p className="mb-3 text-center text-main font-semibold whitespace-pre duration-500  ">
             
               {admin.role === "admin" 
-                ?<span className=" flex gap-2 justify-center align-middle"><ShieldCheck   size={20}/> `Admin - ${admin.branch || "Branch Not Specified"}`</span> 
+                ?<span className=" flex gap-2 justify-center align-middle"><ShieldCheck   size={20}/> Admin - {admin.branch || "Branch Not Specified"}</span> 
               : ("")}
             </p>
           </div>
