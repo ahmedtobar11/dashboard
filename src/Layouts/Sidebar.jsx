@@ -76,7 +76,7 @@ const Sidebar = ({ open, setOpen }) => {
         {open && (
           <div className="flex flex-col justify-center items-center border-b-2 pt-1">
             <div className="relative h-24 w-24 rounded-full  border-4 border-main   overflow-hidden">
-              <img src="admin.jpg" alt="" className=" " />
+              <img src="admin.jpg" alt="admin avatar"  />
             </div>
             <p className="my-1 text-center text-main font-semibold whitespace-pre duration-500  ">
               {admin.role === "super admin" ? (
@@ -88,14 +88,8 @@ const Sidebar = ({ open, setOpen }) => {
               )}
             </p>
 
-            <p className=" text-center text-main font-semibold whitespace-pre duration-500  ">
+            <p className=" text-center text-main font-semibold whitespace-pre duration-500  pb-4 ">
               {admin.email}
-            </p>
-            <p className="mb-3 text-center text-main font-semibold whitespace-pre duration-500  ">
-            
-              {admin.role === "admin" 
-                ?<span className=" flex gap-2 justify-center align-middle"><ShieldCheck   size={20}/> Admin - {admin.branch || "Branch Not Specified"}</span> 
-              : ("")}
             </p>
           </div>
         )}
