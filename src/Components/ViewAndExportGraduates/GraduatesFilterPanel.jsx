@@ -2,9 +2,10 @@ import React, { memo, useMemo } from "react";
 import SelectComponent from "../../Components/ui/SelectComponent";
 import { cities } from "../../utils/cities.json";
 import { useAdminContext } from "../../contexts/AdminContext";
+import Button from "../ui/Button";
 
 export const GraduatesFilterPanel = memo(
-  ({ filters, branches, onFilterChange, onReset, onApply }) => {
+  ({ filters, branches, onFilterChange, onReset, onApplySearch }) => {
     const { admin } = useAdminContext();
 
     const handleChange = (key, value) => {
@@ -46,40 +47,47 @@ export const GraduatesFilterPanel = memo(
 
     const teachingOptions = useMemo(
       () => [
-        { value: "", label: "All" },
-        { value: "Business sessions", label: "Business sessions" },
-        { value: "Courses", label: "Courses" },
+        { value: "", label: "All Interests" },
+        { value: "Business sessions", label: "Business sessions only" },
+        { value: "Courses", label: "Courses only" },
         { value: "Both", label: "Business sessions & Courses" },
       ],
       []
     );
 
     return (
-      <div className="bg-white p-4 rounded-lg shadow">
+      <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {/* Search by Full Name */}
-          <div className="relative">
+          {/* Search by Full Name with dedicated search button */}
+          <div className="relative xl:col-span-2">
             <label
               htmlFor="fullName"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-semibold text-gray-700 mb-1"
             >
               Full Name
             </label>
-            <input
-              type="text"
-              id="fullName"
-              value={filters.fullName}
-              onChange={(e) => handleChange("fullName", e.target.value)}
-              placeholder="Search by name..."
-              className="w-full p-2 pl-8 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
-              title="Enter the graduate's full name"
-            />
-            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 mt-2 text-gray-400">
-              🔎
-            </span>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                id="fullName"
+                value={filters.fullName}
+                onChange={(e) => handleChange("fullName", e.target.value)}
+                placeholder="Search by name..."
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                title="Enter the graduate's full name"
+              />
+
+              <Button
+                text="Search"
+                size="sm"
+                onClick={onApplySearch}
+                className="px-4 py-2 hover:bg-gray-200 hover:border-red-700 border-2 rounded-md transition-colors"
+                variant="fill"
+              />
+            </div>
           </div>
 
-          {/* Drop-down Filters with labels */}
+          {/* Drop-down Filters with immediate application */}
           {[
             {
               key: "cityOfBirth",
@@ -121,7 +129,7 @@ export const GraduatesFilterPanel = memo(
               <div key={key}>
                 <label
                   htmlFor={key}
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-semibold text-gray-700 mb-1"
                 >
                   {label}
                 </label>
@@ -131,7 +139,7 @@ export const GraduatesFilterPanel = memo(
                   value={filters[key]}
                   onChange={(option) => handleChange(key, option.value)}
                   placeholder={placeholder}
-                  className="w-full"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
                   title={`Filter by ${label}`}
                 />
               </div>
@@ -139,21 +147,14 @@ export const GraduatesFilterPanel = memo(
         </div>
 
         {/* Reset Filters Button */}
-        <div className="flex justify-between mt-4">
-          <button
+        <div className="flex justify-end mt-4">
+          <Button
+            text="Reset Filters"
+            size="sm"
             onClick={onReset}
-            className="px-4 py-2 text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-md transition-colors"
-            title="Clear all filters"
-          >
-            Reset Filters
-          </button>
-          <button
-            onClick={onApply}
-            className="px-4 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md transition-colors"
-            title="Apply filters"
-          >
-            Apply Filters
-          </button>
+            className="px-4 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-md transition-colors"
+            variant="outline"
+          />
         </div>
       </div>
     );

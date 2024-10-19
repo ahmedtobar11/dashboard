@@ -21,6 +21,10 @@ export const GraduatesView = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Separate state for text search
+  const [searchText, setSearchText] = useState("");
+  const [lastSearchText, setLastSearchText] = useState("");
+
   // Get initial filters from URL
   const initialFilters = useMemo(() => {
     const params = new URLSearchParams(location.search);
@@ -34,7 +38,6 @@ export const GraduatesView = () => {
   }, [location.search]);
 
   const [filters, setFilters] = useState(initialFilters);
-  const [unappliedFilters, setUnappliedFilters] = useState(initialFilters);
 
   // Update URL when filters change
   useEffect(() => {
@@ -54,33 +57,49 @@ export const GraduatesView = () => {
   }, [filters, navigate, location.pathname, location.search]);
 
   const handleFilterChange = useCallback((newFilters) => {
-    setUnappliedFilters((prev) => ({ ...prev, ...newFilters }));
+    const [filterKey, filterValue] = Object.entries(newFilters)[0];
+
+    if (filterKey === "fullName") {
+      setSearchText(filterValue);
+    } else {
+      setFilters((prev) => ({ ...prev, ...newFilters }));
+      setCurrentPage(1);
+    }
   }, []);
 
   const handleResetFilters = useCallback(() => {
-    setUnappliedFilters(INITIAL_FILTERS);
+    setFilters(INITIAL_FILTERS);
+    setSearchText("");
     setCurrentPage(1);
   }, []);
 
-  const handleApplyFilters = useCallback(() => {
-    setFilters(unappliedFilters);
+  const handleApplySearch = useCallback(() => {
+    if (searchText.trim() === "" || searchText === lastSearchText) {
+      return;
+    }
+    setFilters((prev) => ({ ...prev, fullName: searchText }));
+    setLastSearchText(searchText);
     setCurrentPage(1);
-  }, [unappliedFilters]);
+  }, [searchText, lastSearchText]);
 
   const filterPanelProps = useMemo(
     () => ({
-      filters: unappliedFilters,
+      filters: {
+        ...filters,
+        fullName: searchText,
+      },
       branches,
       onFilterChange: handleFilterChange,
       onReset: handleResetFilters,
-      onApply: handleApplyFilters,
+      onApplySearch: handleApplySearch,
     }),
     [
-      unappliedFilters,
+      filters,
+      searchText,
       branches,
       handleFilterChange,
       handleResetFilters,
-      handleApplyFilters,
+      handleApplySearch,
     ]
   );
 
