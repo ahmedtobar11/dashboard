@@ -10,6 +10,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import authServices from "../services/authServices";
 import { useAdminContext } from "../contexts/AdminContext";
+import { ShieldPlus } from "lucide-react";
 
 const Sidebar = ({ open, setOpen }) => {
   const { admin, setAdmin } = useAdminContext();
@@ -74,16 +75,29 @@ const Sidebar = ({ open, setOpen }) => {
       >
         {open && (
           <div className="flex flex-col justify-center items-center border-b-2 pt-1">
-          <div className="h-24 w-24 rounded-full  border-4 border-main   overflow-hidden">
-          <img src="admin.jpg" alt=""  className=" "/>
+            <div className="relative h-24 w-24 rounded-full  border-4 border-main   overflow-hidden">
+              <img src="admin.jpg" alt="" className=" " />
+            </div>
+            <p className="my-1 text-center text-main font-semibold whitespace-pre duration-500  ">
+              {admin.role === "super admin" ? (
+                <span className=" flex gap-1 justify-center align-middle">
+                  <ShieldPlus size={24} /> Super Admin
+                </span>
+              ) : (
+                admin.fullName
+              )}
+            </p>
+
+            <p className=" text-center text-main font-semibold whitespace-pre duration-500  ">
+              {admin.email}
+            </p>
+            <p className="mb-3 text-center text-main font-semibold whitespace-pre duration-500  ">
+            
+              {admin.role === "admin" 
+                ?<span className=" flex gap-2 justify-center align-middle"><ShieldCheck   size={20}/> `Admin - ${admin.branch || "Branch Not Specified"}`</span> 
+              : ("")}
+            </p>
           </div>
-          <p className="text-text whitespace-pre duration-500">
-            {admin.fullName}
-          </p>
-          <p className="mb-3   text-center text-text whitespace-pre duration-500">
-            {admin.email}
-          </p>
-        </div>
         )}
 
         <div className="flex-grow">
