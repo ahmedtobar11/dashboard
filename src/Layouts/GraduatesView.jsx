@@ -93,14 +93,7 @@ export const GraduatesView = () => {
       onReset: handleResetFilters,
       onApplySearch: handleApplySearch,
     }),
-    [
-      filters,
-      searchText,
-      branches,
-      handleFilterChange,
-      handleResetFilters,
-      handleApplySearch,
-    ]
+    [filters, searchText, branches, handleFilterChange, handleResetFilters, handleApplySearch]
   );
 
   const tableContainerProps = useMemo(
