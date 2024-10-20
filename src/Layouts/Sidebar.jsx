@@ -95,7 +95,7 @@ const Sidebar = ({ open, setOpen }) => {
         )}
 
         <div className="flex-grow flex flex-col  ">
-          <div className="flex flex-col gap-4 md:gap-5  relative mx-auto my-5 text-text pb-5 pt-1 xl:my-0 md:mb-28 ">
+          <div className="flex flex-col gap-4 md:gap-5  relative mx-auto my-5 text-text pb-5 pt-1 xl:my-0 lg:mb-28 ">
             {filteredMenus.map((menu, i) => (
               <NavLink
                 to={menu.link}

@@ -29,19 +29,19 @@ export const GraduatesTable = memo(
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm md:text-lg text-center">
-            <thead className="text-xs md:text-lg lg:text-xl text-gray-700 uppercase bg-gray-100">
+          <table className="w-full text-center">
+            <thead className="text-xs md:text-sm lg:text-sm text-gray-700 uppercase text-nowrap bg-gray-100">
               <tr>
-                <th scope="col" className="md:px-3 py-3">
+                <th scope="col" className="lg:px-3 py-3">
                   Student Info
                 </th>
-                <th scope="col" className="md:px-3 py-3">
+                <th scope="col" className="lg:px-3 py-3">
                   Track & Branch
                 </th>
-                <th scope="col" className="md:px-3 py-3 hidden md:block">
+                <th scope="col" className="lg:px-3 py-3 hidden md:block">
                   Education
                 </th>
-                <th scope="col" className="md:px-3 py-3">
+                <th scope="col" className="lg:px-3 py-3">
                   Actions
                 </th>
               </tr>
