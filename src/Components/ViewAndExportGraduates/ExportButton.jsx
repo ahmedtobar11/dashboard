@@ -10,9 +10,10 @@ function ExportButton({ fetchAllGraduatesForExport, filters }) {
     // Fetch all graduates for export
     let grads = await fetchAllGraduatesForExport(filters);
     let workBook = XLSX.utils.book_new();
-    grads = grads.map((grad) => {
-      grad.preferredCoursesToTeach = grad.preferredCoursesToTeach.join();
-      grad.preferredTeachingBranches = grad.preferredTeachingBranches.join();
+    grads = grads.map((grad, i) => {
+      grad.preferredCoursesToTeach = grad.preferredCoursesToTeach?.join() || "";
+      grad.preferredTeachingBranches =
+        grad.preferredTeachingBranches?.join() || "";
       return grad;
     });
 
