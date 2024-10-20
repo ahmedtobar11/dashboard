@@ -14,7 +14,8 @@ const Button = ({
     "btn font-semibold rounded focus:outline-none transition-all duration-200 ease-in-out inline-flex items-center justify-center";
     
   const sizeClasses = {
-    sm: "h-2 px-3 text-sm min-w-[40px] leading-normal",
+    xs:"h-1 p-1 text-xs min-w-[40px] leading-normal ",
+    sm: "h-2 px-1 text-xs min-w-[40px] leading-normal mr-1",
     md: "h-10 px-4 text-base min-w-[100px] leading-normal",
     lg: "h-12 px-6 text-lg min-w-[120px] leading-normal"
   };
