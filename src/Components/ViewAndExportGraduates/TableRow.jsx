@@ -1,7 +1,6 @@
 import Button from "../ui/Button";
 
 export default function TableRow({ grad, onExpandRow, isExpanded }) {
-  console.log(grad);
   return (
     <>
       <tr className="text-xs md:text-sm  ">
@@ -43,7 +42,7 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
           <Button
             variant={"outline"}
             size="sm"
-            onClick={() => onExpandRow(grad._id)}
+            onClick={() => onExpandRow(grad.email)}
             text="more details"
             className="text-xs sm:text-sm"
           />
@@ -79,16 +78,16 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                       Education Info
                     </h3>
                     <div className="text-start ">
-
-                    <div >
-                      <span className="font-semibold text-sm">University:</span>
-                      <span className=" text-xs">{grad.university}</span>
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm">Faculty:</span>
-                      <span className=" text-xs ">{grad.faculty}</span>
-                     
-                    </div>
+                      <div>
+                        <span className="font-semibold text-sm">
+                          University:
+                        </span>
+                        <span className=" text-xs">{grad.university}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-sm">Faculty:</span>
+                        <span className=" text-xs ">{grad.faculty}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -102,10 +101,13 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                     <span className="font-semibold text-sm">
                       preferred Courses To Teach :
                     </span>
-                    <br/>
-                    {grad.preferredCoursesToTeach.map((e) => {
+                    <br />
+                    {grad.preferredCoursesToTeach.map((e, index) => {
                       return (
-                        <span className="badge badge-ghost badge-sm text-nowrap text-center m-1">
+                        <span
+                          key={index}
+                          className="badge badge-ghost badge-sm text-nowrap text-center m-1"
+                        >
                           {e}
                         </span>
                       );
@@ -115,10 +117,13 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                     <span className="font-semibold text-sm">
                       preferred Teaching Branches :
                     </span>
-                    <br/>
-                    {grad.preferredTeachingBranches.map((e) => {
+                    <br />
+                    {grad.preferredTeachingBranches.map((e, index) => {
                       return (
-                        <span className="badge badge-ghost badge-sm text-nowrap text-center m-1">
+                        <span
+                          key={index}
+                          className="badge badge-ghost badge-sm text-nowrap text-center m-1"
+                        >
                           {e}
                         </span>
                       );
@@ -134,65 +139,70 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                   </h3>
 
                   <div className="text-start flex flex-col gap-2">
+                    <p className="text-xs lg:text-sm">
+                      <span className="font-semibold">Job Title: </span>
+                      {grad.fullJobTitle || "No job yet"}
+                    </p>
+                    <div className="flex justify-between md:flex-col  gap-2">
+                      <p className="text-xs lg:text-sm">
+                        <span className="font-semibold">Company:</span>{" "}
+                        {grad.companyName || "No job yet"}
+                      </p>
+                      <p className="text-xs lg:text-sm">
+                        <span className="font-semibold">Experience:</span>{" "}
+                        {grad.yearsOfExperience || 0}
+                        {` years`}
+                      </p>
+                    </div>
+                    {grad.linkedin ? (
+                      <p className="text-xs lg:text-sm ">
+                        <span className="font-semibold">
+                          <a
+                            target="_blank"
+                            href={grad.linkedin}
+                            className="text-blue-500 cursor-pointer"
+                          >
+                            show linkedin
+                          </a>
+                        </span>
+                      </p>
+                    ) : (
+                      ""
+                    )}
 
-                  <p className="text-xs lg:text-sm">
-                     <span className="font-semibold">Job Title: </span>
-                    {grad.fullJobTitle || "No job yet"}
-                  </p>
-                  <div className="flex justify-between md:flex-col  gap-2">
-                    <p className="text-xs lg:text-sm">
-                       <span className="font-semibold">Company:</span>                      {grad.companyName || "No job yet"}
-                    </p>
-                    <p className="text-xs lg:text-sm">
-                       <span className="font-semibold">Experience:</span> {grad.yearsOfExperience || 0}
-                      {` years`}
-                    </p>
-                  </div>
-                  {grad.linkedin ? (
-                    <p className="text-xs lg:text-sm ">
-                       <span className="font-semibold">
-                        <a
-                          target="_blank"
-                          href={grad.linkedin}
-                          className="text-blue-500 cursor-pointer"
-                        >
-                          show linkedin
-                        </a>
+                    <div className="mt-2">
+                      <span className="badge  text-white   bg-main font-extrabold text-xs">
+                        {grad.hasFreelanceExperience
+                          ? "Had Freelance Experience"
+                          : "No Freelance Experience"}
                       </span>
-                    </p>
-                  ) : (
-                    ""
-                  )}
-
-                  <div className="mt-2">
-                    <span className="badge  text-white   bg-main font-extrabold text-xs">
-                      {grad.hasFreelanceExperience
-                        ? "Had Freelance Experience"
-                        : "No Freelance Experience"}
-                    </span>
+                    </div>
                   </div>
-                 </div>
                 </div>
               </div>
 
               <div className="card bg-base-100 shadow-sm">
                 <div className=" p-3 lg:p-5">
-                  <h3 className="card-title font-extrabold text-sm lg:text-base"> ITI </h3>
+                  <h3 className="card-title font-extrabold text-sm lg:text-base">
+                    {" "}
+                    ITI{" "}
+                  </h3>
                   <div className="text-start flex flex-col gap-2">
-                  <p className="text-xs lg:text-sm ">
-                     <span className="font-semibold">Program:</span>
-                    <span className="text-xs">{grad.program}</span>
-                  </p>
-                  <div className="flex justify-between md:flex-col  gap-2">
-                    <p className="text-xs lg:text-sm">
-                       <span className="font-semibold">Intake:</span> {grad.intake}
+                    <p className="text-xs lg:text-sm ">
+                      <span className="font-semibold">Program:</span>
+                      <span className="text-xs">{grad.program}</span>
                     </p>
-                    <p className="text-xs lg:text-sm">
-                       <span className="font-semibold">Graduation:</span> {grad.itiGraduationYear}
-                    </p>
+                    <div className="flex justify-between md:flex-col  gap-2">
+                      <p className="text-xs lg:text-sm">
+                        <span className="font-semibold">Intake:</span>{" "}
+                        {grad.intake}
+                      </p>
+                      <p className="text-xs lg:text-sm">
+                        <span className="font-semibold">Graduation:</span>{" "}
+                        {grad.itiGraduationYear}
+                      </p>
+                    </div>
                   </div>
-                  </div>
-                
                 </div>
               </div>
             </div>

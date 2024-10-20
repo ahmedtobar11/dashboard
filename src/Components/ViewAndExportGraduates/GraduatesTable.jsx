@@ -50,10 +50,10 @@ export const GraduatesTable = memo(
               {grads?.length > 0 ? (
                 grads.map((grad) => (
                   <TableRow
-                    key={grad._id}
+                    key={grad.email}
                     grad={grad}
                     onExpandRow={setExpandedRow}
-                    isExpanded={expandedRow === grad._id}
+                    isExpanded={expandedRow === grad.email}
                   />
                 ))
               ) : (
