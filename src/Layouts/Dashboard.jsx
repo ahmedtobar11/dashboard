@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   const pieChartData = [
     {
-      name: admin.branch,
+      name: admin.branch || "smart village" ,
       value:
         graduateData.find((branch) => branch.branch === admin.branch)
           ?.graduates || 0,
@@ -175,7 +175,7 @@ const Dashboard = () => {
         </div>
         <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md flex-1">
           <h3 className="text-base sm:text-lg lg:text-xl xl:text-2xl text-main font-bold text-center mb-6">
-           {admin.branch} vs Other Graduates
+           {admin.role === "admin"? admin.branch:"smart village" } vs Other Graduates
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -242,7 +242,7 @@ const Dashboard = () => {
           </p>
           <img
             className="w-32 h-32 hidden lg:block lg:w-56 lg:h-56 object-contain"
-            src="/itilogo.png"
+            src="/ColoredLogo.svg"
             alt="ITI Logo"
           />
         </div>
