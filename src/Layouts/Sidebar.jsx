@@ -69,7 +69,7 @@ const Sidebar = ({ open, setOpen }) => {
   return (
     <section>
       <div
-        className={`pt-2 bg-main-light min-h-screen flex flex-col ${
+        className={`pt-2 bg-main-light min-h-screen flex flex-col  ${
           open ? "w-72" : "w-16"
         } duration-500`}
       >
@@ -94,8 +94,8 @@ const Sidebar = ({ open, setOpen }) => {
           </div>
         )}
 
-        <div className="flex-grow">
-          <div className="flex flex-col gap-4 relative m-4 text-text">
+        <div className="flex-grow flex flex-col  ">
+          <div className="flex flex-col gap-4 md:gap-5  relative mx-auto my-5 text-text pb-5 pt-1 xl:my-0 md:mb-28 ">
             {filteredMenus.map((menu, i) => (
               <NavLink
                 to={menu.link}
@@ -133,10 +133,10 @@ const Sidebar = ({ open, setOpen }) => {
             ))}
           </div>
           {open && (
-            <div className="flex justify-center items-center ">
+            <div className="flex justify-center items-center pb-2 ">
               <img
-                className="max-w-full max-h-60 object-contain"
-                src="itilogo.png"
+                className="max-w-52 max-h-52 object-cover"
+                src="ColoredLogo.svg"
                 alt="ITI Image"
               />
             </div>
