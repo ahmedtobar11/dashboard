@@ -64,13 +64,17 @@ function DetailsModal({ isOpen, onClose, data }) {
                 label="Graduation Year"
                 value={data.itiGraduationYear}
               />
-              <DetailRow label="Intake" value={data.intake} />
+              {data.intake ? (
+                <DetailRow label="Intake" value={data.intake} />
+              ) : (
+                <DetailRow label="Round" value={data.round} />
+              )}
               <DetailRow
-                label="Teaching Branches"
+                label="Preferred Teaching Branches"
                 value={data.preferredTeachingBranches?.join(", ")}
               />
               <DetailRow
-                label="Preferred Courses"
+                label="Preferred Courses to Teach"
                 value={
                   data.preferredCoursesToTeach.length > 1
                     ? data.preferredCoursesToTeach.join(", ")
@@ -81,11 +85,11 @@ function DetailsModal({ isOpen, onClose, data }) {
               <DetailRow label="Company Name" value={data.companyName} />
               <DetailRow
                 label="Years of Experience"
-                value={data.yearsOfExperience}
+                value={`${data.yearsOfExperience} years`}
               />
               <DetailRow
                 label="Worked as Freelancer"
-                value={data.hasFreelanceExperience ? "Yes" : "NO"}
+                value={data.hasFreelanceExperience ? "Yes" : "No"}
               />
               <DetailRow
                 label="Freelancing Income"

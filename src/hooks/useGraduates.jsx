@@ -67,8 +67,13 @@ const useGraduates = (queryParams = {}) => {
           );
         }
 
-        if (response && response.graduates) {
+        if (
+          response &&
+          response.graduates &&
+          response.paginationMetaData.pagesCount !== 0
+        ) {
           setGrads(response.graduates);
+
           setTotalPages(response.paginationMetaData.pagesCount);
         } else {
           setGrads([]);

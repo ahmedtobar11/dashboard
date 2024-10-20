@@ -1,5 +1,5 @@
 import Button from "../ui/Button";
-import { Linkedin } from 'lucide-react';
+import { Linkedin } from "lucide-react";
 
 export default function TableRow({ grad, onExpandRow, isExpanded }) {
   return (
@@ -90,19 +90,32 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                     Professional
                   </h3>
                   <p className="text-xs sm:text-sm">
-                    <strong>Job Title:</strong>
-                    {grad.fullJobTitle || "NO JOB YET"}
+                    <strong>Job Title: </strong>
+                    {grad.fullJobTitle || "No job yet"}
                   </p>
                   <p className="text-xs sm:text-sm">
-                    <strong>Company:</strong> {grad.companyName || "NO JOB YET"}
+                    <strong>Company:</strong> {grad.companyName || "No job yet"}
                   </p>
                   <p className="text-xs sm:text-sm">
                     <strong>Experience:</strong> {grad.yearsOfExperience || 0}
-                    years
+                    {` years`}
                   </p>
-                  <p className="text-xs sm:text-sm ">
-                  <strong><a target="_blank" href={grad.linkedin} className="text-blue-500 cursor-pointer"> show Linkedin </a></strong> 
-                  </p>
+                  {grad.linkedin ? (
+                    <p className="text-xs sm:text-sm ">
+                      <strong>
+                        <a
+                          target="_blank"
+                          href={grad.linkedin}
+                          className="text-blue-500 cursor-pointer"
+                        >
+                          show Linkedin{" "}
+                        </a>
+                      </strong>
+                    </p>
+                  ) : (
+                    ""
+                  )}
+
                   <div className="mt-2">
                     <span className="badge  text-white   bg-main font-extrabold text-xs">
                       {grad.hasFreelanceExperience
@@ -118,12 +131,10 @@ export default function TableRow({ grad, onExpandRow, isExpanded }) {
                     Education Info
                   </h3>
                   <div>
-                    
                     <strong>University:</strong>
                     {grad.university}
                   </div>
                   <div>
-                    
                     <strong>Faculty:</strong>
                     {grad.faculty}
                   </div>
